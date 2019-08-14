@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+
+</head>
+
+<body>
+
+	<section layout:fragment="content">
+		<div class="layout-pagina">
+		
+			<h1 class="titulo-formulario"><i class="fas fa-list"></i>&nbsp;Produtos</h1>
+			
+			<div class="alert  alert-success"
+				th:if="${!#strings.isEmpty(mensagem)}">
+				<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+					sucesso!</span>
+			</div>
+			
+			<div class="pesquisa">
+				<form method="GET" class="form-inline" action="/fornecedores/produtos" th:object="${filtro}">
+						<div class="input-group col-sm-4">
+							<input class="form-control"	placeholder="Qual produto você está procurando?"
+								autofocus="autofocus" th:field="*{descricao}">
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-default">
+									<i class="fas fa-search"></i>
+								</button>
+							</div>
+						</div>
+				</form>
+			</div>
+
+			<div class="table-responsive-sm">
+				<table id="tabela-produtos"
+					class="table  table-sm table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<thead>
+						<tr>
+							<th scope="col" class="text-center">Código</th>
+							<th scope="col">Descrição</th>
+							<th scope="col" class="text-center">Qtd</th>
+							<th scope="col" class="text-center">Valor compra</th>
+							<th scope="col" class="text-center">Valor venda</th>
+							<th scope="col">Fornecedor</th>
+							<th scope="col" class="text-center">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="produto: ${produtos}">
+							<td class="text-center" th:text="${produto.id}">p1</td>
+
+							<td th:text="${produto.descricao}">os1</td>
+
+							<td class="text-center"	th:text="${produto.qtd}">qtd</td>
+
+							<td class="text-right" th:text="${produto.convertValorToMoney(produto.valorCompra)}">valorcompra</td>
+							
+							<td class="text-right" th:text="${produto.convertValorToMoney(produto.valorVenda)}">valorvenda</td>
+
+							<td th:text="${produto.fornecedor.nome}">fornecedor</td>
+
+							
+
+							<td class="text-center">
+								<form method="POST"
+									th:onsubmit="'return confirm(\'Posso remover o produto: ' + 
+								${produto.descricao} + ' da base de dados?\');'"
+									th:action="@{/fornecedores/produtos/excluir/{id}(id=${produto.id})}">
+									<input type="hidden" name="_method" value="DELETE" />
+									<a class="btn btn-primary btn-sm" th:href="@{/fornecedores/produtos/{id}(id=${produto.id})}"
+										th:title="Editar"> <span class="fa fa-pencil-alt"></span>
+									</a>
+									<button type="submit" class="btn btn-danger btn-sm" title="Excluir">
+										<span class="far fa-trash-alt"></span>
+									</button>
+								</form>
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="7" th:if="${produtos.empty}">Nenhum Produto cadastrado na base de dados!</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

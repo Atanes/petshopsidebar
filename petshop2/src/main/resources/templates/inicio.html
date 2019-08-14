@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorate="~{layout/layout}">
+<head>
+	<title>Página principal</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="container">
+			<div class="layout-pagina">
+				<div class="page-header">
+					<div>
+						<a th:href="@{http://www.petshop.com.br}"> <img
+							alt="Pet Shop Teste" th:src="@{/images/logoPetShop.png}" />
+						</a>
+					</div>
+					<h3>
+						<span sec:authentication="principal.nome"></span>, Bem vindo ao
+						sistema!
+					</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

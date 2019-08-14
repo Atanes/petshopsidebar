@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+	<script th:src="@{/js/BuscaCEP.js}"></script>
+	<script th:src="@{/javascripts/jquery.mask.min.js}"></script>
+	<script th:src="@{/js/mascaras.js}"></script>
+	<script th:src="@{/webjars/jquery.inputmask/4.0.5/jquery.inputmask.bundle.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+	
+			$(".fone").inputmask({
+				mask : [ "(99) 9999-9999", "(99) 99999-9999", ],
+				keepStatic : true
+			});
+	
+		});
+	</script>
+</head>
+
+<body>
+	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
+		
+			<h1 class="titulo-formulario"><i class="fas fa-user-plus"></i>&nbsp;Cadastro de cliente</h1>
+			
+			<form method="POST" class="form-vertical  js-form-loading"
+				th:object="${cliente}" th:action="@{/atendimento/clientes/salvar}">
+				
+				<div class="alert  alert-danger  alert-dismissible" role="alert"
+					th:if="${#fields.hasAnyErrors()}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					<div th:each="erro: ${#fields.detailedErrors()}">
+						<i class="fa fa-exclamation-circle"></i>
+						<span th:text="${erro.message}">Mensagem erro.</span>
+					</div>
+				</div>
+
+				<div class="alert  alert-success"
+					th:if="${!#strings.isEmpty(mensagem)}">
+					<i class="fa fa-check-circle"></i>
+					<span th:text="${mensagem}">Mensagem sucesso!</span>
+				</div>
+
+				<input type="hidden" th:field="*{id}" />
+				<input type="hidden" th:field="*{endereco}" />
+
+				<div class="row">
+					
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="nome">Nome<span class="obrigatorio"> *</span></label>
+							<input id="nome" type="text" class="form-control" th:field="*{nome}" />
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="data_nasc">Data de nascimento<span class="obrigatorio"> *</span></label>
+							<input	id="data_nasc" type="date" class="form-control"	th:field="*{data_nasc}" />
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<label for="sexo">Sexo<span class="obrigatorio"> *</span></label>
+							<select	id="sexo" class="form-control" th:field="*{sexo}">
+									<option value="">Selecione o sexo</option>
+									<option value="Feminino">Feminino</option>
+									<option value="Masculino">Masculino</option>
+									<option value="Indiferente">Indiferente</option>
+							</select>
+					</div>
+					
+				</div>
+				
+				<div class="row">
+					
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="cpf">CPF<span class="obrigatorio"> *</span></label>
+							<input id="cpf" type="text"	class="form-control cpf" placeholder="Ex: 000.000.000-00" th:field="*{cpf}" />
+						</div>
+					</div>
+					
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="rg">RG</label>
+							<input id="rg" type="text"	class="form-control rg" placeholder="Ex: 00.000.000-0" th:field="*{rg}" />
+						</div>
+					</div>
+				
+					<div class="col-sm-2 form-group">
+						<label for="telefone1">Telefone principal<span class="obrigatorio"> *</span></label>
+						<input id="telefone1" type="text" class="form-control fone" th:field="*{telefone1}"/>
+					</div>
+							
+					<div class="col-sm-2 form-group">
+						<label for="telefone2">Telefone adicional</label>
+						<input id="telefone2" type="text" class="form-control fone" th:field="*{telefone2}"/>
+					</div>
+					
+					<div class="col-sm-4 form-group">
+						<label for="email">E-mail<span class="obrigatorio"> *</span></label>
+						<input id="email" type="text" class="form-control" th:field="*{email}"/>
+					</div>
+					
+				</div>
+				
+				<div class="row">
+					
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="cep">CEP</label>
+							<input id="cep" type="text"	class="form-control cep" onblur="pesquisacep(this.value);" th:field="*{endereco.CEP}"/>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="logradouro">Logradouro</label>
+							<input id="logradouro" type="text"	class="form-control" th:field="*{endereco.logradouro}"/>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<div class="form-group">
+							<label for="nr">Nº</label>
+							<input id="nr" type="text" class="form-control sonumeros" th:field="*{endereco.nr}"/>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="complemento">Complemento</label>
+							<input id="complemento" type="text"	class="form-control" th:field="*{endereco.complemento}"/>
+						</div>
+					</div>
+				
+				</div>
+				
+				<div class="row">
+					
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="bairro">Bairro</label> 
+							<input id="bairro" type="text" class="form-control" th:field="*{endereco.bairro}"/>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="cidade">Cidade</label> 
+							<input id="cidade" type="text" class="form-control" th:field="*{endereco.cidade}"/>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="estado">Estado</label> 
+							<input id="estado" type="text" class="form-control" th:field="*{endereco.estado}"/>
+						</div>
+					</div>
+				
+				</div>
+				<div class="container">
+					<div class="row justify-content-between">
+						
+						<button class="btn  btn-primary btn-sm col-sm-1 "type="submit" title="Salvar">
+							<i class="far fa-save"></i> Salvar
+						</button>
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-1"
+							th:href="@{/atendimento/clientes}" th:title="'Cancelar operação'"> 
+							<i class="far fa-window-close"></i> Cancelar
+						</a>
+					</div>
+				</div>
+			</form>
+		</section>
+</body>
+</html>
