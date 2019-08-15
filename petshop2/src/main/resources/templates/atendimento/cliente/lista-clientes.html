@@ -10,7 +10,7 @@
 
 	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
 		
-			<h1 class="titulo-formulario"><i class="fas fa-list"></i>&nbsp;Clientes</h1>
+			<h1 class="titulo-formulario"><i class="fas fa-list"></i>Clientes</h1>
 			
 			<div class="alert  alert-success"
 				th:if="${!#strings.isEmpty(mensagem)}">
@@ -19,7 +19,7 @@
 			</div>
 			
 			<div class="pesquisa">
-				<form method="GET" class="form-inline" action="/atendimento/clientes/inativos" th:object="${filtro}">
+				<form method="GET" class="form-inline" action="/atendimento/clientes" th:object="${filtro}">
 					<div class="input-group col-sm-4">
 						<input class="form-control" placeholder="Qual cliente você está procurando?"
 							autofocus="autofocus" th:field="*{nome}"></input>

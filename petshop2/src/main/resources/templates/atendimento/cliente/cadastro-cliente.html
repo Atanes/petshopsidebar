@@ -4,6 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 <head>
+	<title>Cadastro de Clientes</title>
 	<script th:src="@{/js/BuscaCEP.js}"></script>
 	<script th:src="@{/javascripts/jquery.mask.min.js}"></script>
 	<script th:src="@{/js/mascaras.js}"></script>
@@ -23,7 +24,7 @@
 <body>
 	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
 		
-			<h1 class="titulo-formulario"><i class="fas fa-user-plus"></i>&nbsp;Cadastro de cliente</h1>
+			<h1 class="titulo-formulario"><i class="fas fa-user-plus"></i>Cadastro de cliente</h1>
 			
 			<form method="POST" class="form-vertical  js-form-loading"
 				th:object="${cliente}" th:action="@{/atendimento/clientes/salvar}">

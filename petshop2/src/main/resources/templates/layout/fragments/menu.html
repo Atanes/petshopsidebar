@@ -4,6 +4,10 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
+
+	<script th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.14.3/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 	
 </head>
 	
@@ -109,7 +113,7 @@
 							<i class="fas fa-users"></i>
 							<span class="d-none d-md-inline">Usuários</span>
     					</a>
-    					<a href="/fornecedores" class="list-group-item" sec:authorize="hasRole('PS_ATENDIMENTO') or hasRole('PS_ADMIN')">
+    					<a href="/atendimento/clientes" class="list-group-item" sec:authorize="hasRole('PS_ATENDIMENTO') or hasRole('PS_ADMIN')">
 							<i class="fas fa-address-card"></i>
 							<span class="d-none d-md-inline">Clientes</span>
     					</a>

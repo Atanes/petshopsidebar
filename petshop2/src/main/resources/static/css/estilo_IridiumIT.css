@@ -96,6 +96,10 @@
 	font-weight: normal;
 }
 
+.titulo-formulario i {
+	margin-right: 5px;
+}
+
 .pesquisa {
 	margin: 0;
 	margin-bottom: 10px;
