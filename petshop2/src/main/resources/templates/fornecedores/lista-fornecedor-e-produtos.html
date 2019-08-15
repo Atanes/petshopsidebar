@@ -25,38 +25,38 @@
 
 			<div class="row">
 
-				<div class="col-sm-2 dadosDestaque">
+				<div class="col-sm-2">
 					<div class="form-group">
 						<label>CNPJ</label>
-						<p class="form-group" th:text="${fornecedor.cnpj}"></p>
+						<p class="form-group text-primary" th:text="${fornecedor.cnpj}"></p>
 					</div>
 				</div>
 
-				<div class="col-sm-2 dadosDestaque">
+				<div class="col-sm-2">
 					<div class="form-group">
 						<label>Contato</label>
-						<p class="form-group" th:text="${fornecedor.contato}"></p>
+						<p class="form-group text-primary" th:text="${fornecedor.contato}"></p>
 					</div>
 				</div>
 
-				<div class="col-sm-2 dadosDestaque">
+				<div class="col-sm-2">
 					<div class="form-group">
 						<label>Telefone</label>
-						<p class="form-group" th:text="${fornecedor.telefone}"></p>
+						<p class="form-group text-primary" th:text="${fornecedor.telefone}"></p>
 					</div>
 				</div>
 
-				<div class="col-sm-2 dadosDestaque">
+				<div class="col-sm-2">
 					<div class="form-group">
 						<label>Celular</label>
-						<p class="form-group" th:text="${fornecedor.celular}"></p>
+						<p class="form-group text-primary" th:text="${fornecedor.celular}"></p>
 					</div>
 				</div>
 
-				<div class="col-sm-4 dadosDestaque">
+				<div class="col-sm-4">
 					<div class="form-group">
 						<label>E-mail</label>
-						<p class="form-group" th:text="${fornecedor.email}"></p>
+						<p class="form-group text-primary" th:text="${fornecedor.email}"></p>
 					</div>
 				</div>
 
@@ -65,11 +65,11 @@
 			<div class="container">
 				<div class="row justify-content-between">
 
-					<a id="btnincluirproduto" class="btn btn-success btn-sm col-sm-1"
+					<a id="btnincluirproduto" class="btn btn-success btn-sm col-sm-2"
 						th:href="@{/fornecedores/produtos/incluirProduto/{id}(id=${fornecedor.id})}"
 						th:title="'Incluir Produtos'"> <span class="fas fa-dolly"></span>
 						Produto
-					</a> <a id="btneditarcliente" class="btn btn-primary btn-sm col-sm-1"
+					</a> <a id="btneditarcliente" class="btn btn-primary btn-sm col-sm-2"
 						th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}"
 						th:title="'Editar Fornecedor'"> <span class="fa fa-pencil-alt"></span>
 						Editar
@@ -95,8 +95,8 @@
 					</div>
 				</form>
 			</div>
-
-			<div class="table-responsive-sm">
+			<div class="form-row">
+			<div class="table-responsive-sm col-sm-12">
 				<table id="tabela-produtos"
 					class="table  table-sm table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
 					<thead>
@@ -155,6 +155,7 @@
 						</tr>
 					</tbody>
 				</table>
+			</div>
 			</div>
 	</section>
 </body>

@@ -29,8 +29,13 @@ public class UsuarioService implements UserDetailsService{
 	}
 	
 	public List<Usuario> filtrar(UsuarioFiltro filtro) {
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
-		return usuarios.findByNomeContainingIgnoreCase(nome);
+		
+		if(filtro.getNome() == null) {
+			return usuarios.findAll();
+		}else {
+			return usuarios.findByNomeContainingIgnoreCase(filtro.getNome());
+		}
+
 	}
 	
 	public void excluir(Long codigo) {

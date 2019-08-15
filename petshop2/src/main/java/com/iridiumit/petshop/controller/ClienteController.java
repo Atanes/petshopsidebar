@@ -2,6 +2,7 @@ package com.iridiumit.petshop.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -49,11 +50,12 @@ public class ClienteController {
 	@GetMapping
 	public ModelAndView listar(@ModelAttribute("filtro") ClienteFiltro filtro) {
 
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
-
 		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes");
+		
+		List<Cliente> clientes = clienteService.filtrar(filtro);
 
-		modelAndView.addObject("clientes", clientes.findByNomeContainingIgnoreCaseAndAtivo(nome, true));
+		modelAndView.addObject("clientes", clientes);
+		
 		return modelAndView;
 	}
 

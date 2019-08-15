@@ -17,14 +17,11 @@ public class FornecedorService {
 		
 	public List<Fornecedor> filtrar(FornecedorFiltro filtro) {
 		
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
-		return fornecedores.findByNomeContainingIgnoreCase(nome);
-	}
-	
-	public List<Fornecedor> filtrar(String nome) {
-		
-		String pesquisa = nome == null ? "%" : nome;
-		return fornecedores.findByNomeContainingIgnoreCase(pesquisa);
+		if(filtro.getNome() == null) {
+			return fornecedores.findAll();
+		}else {
+			return fornecedores.findByNomeContainingIgnoreCase(filtro.getNome());
+		}
 	}
 	
 	public void excluir(Long codigo) {

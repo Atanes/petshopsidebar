@@ -1,5 +1,7 @@
 package com.iridiumit.petshop.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,6 @@ import com.iridiumit.petshop.model.Fornecedor;
 import com.iridiumit.petshop.repository.Fornecedores;
 import com.iridiumit.petshop.repository.Produtos;
 import com.iridiumit.petshop.repository.filtros.FornecedorFiltro;
-import com.iridiumit.petshop.repository.filtros.ProdutoFiltro;
 import com.iridiumit.petshop.service.FornecedorService;
 
 @Controller
@@ -37,26 +38,25 @@ public class FornecedorController {
 	@GetMapping
 	public ModelAndView listar(@ModelAttribute("filtro") FornecedorFiltro filtro) {
 		
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
-		
 		ModelAndView modelAndView = new ModelAndView("fornecedores/lista-fornecedores");
+		
+		List<Fornecedor> fornecedores = fornecedorService.filtrar(filtro);
 
-		modelAndView.addObject("fornecedores", fornecedores.findByNomeContainingIgnoreCase(nome));
+		modelAndView.addObject("fornecedores", fornecedores);
+		
 		return modelAndView;
 	}
 	
 	@GetMapping("/{id}")
-	public ModelAndView fornecedorProduto(@PathVariable Long id, @ModelAttribute("filtro") ProdutoFiltro filtro) {
-		
-		String descricao = filtro.getDescricao() == null ? "%" : filtro.getDescricao();
+	public ModelAndView fornecedorProduto(@PathVariable Long id) {
 		
 		ModelAndView modelAndView = new ModelAndView("fornecedores/lista-fornecedor-e-produtos");
 		
 		Fornecedor f = fornecedores.getOne(id);
 		
 		modelAndView.addObject(f);
-
-		modelAndView.addObject("produtos", produtos.findByFornecedorAndDescricaoContainingIgnoreCase(f, descricao));
+		
+		modelAndView.addObject("produtos", produtos.findByFornecedor(f));
 		
 		modelAndView.addObject("mensagem", "Fornecedor salvo com sucesso!");
 		

@@ -55,7 +55,7 @@
 	padding: 25px;
 	background-color: #484848;
 	color: #fff;
-	position: fixed;
+	position: relative;
 	left: 0;
 	bottom: 0;
 	width: 100%;
@@ -96,6 +96,10 @@
 	font-weight: normal;
 }
 
+.titulo-lista {
+	margin-top: 15px;
+}
+
 .titulo-formulario i {
 	margin-right: 5px;
 }
@@ -110,5 +114,15 @@
 	content: " *";
 	color: red;
 	font-weight: bold;
+}
+
+.text-primary {
+	font-weight: bold;
+}
+
+.form-group p {
+	margin-top: 0;
+	padding-top: 0;
+	line-height: 1;
 }
 

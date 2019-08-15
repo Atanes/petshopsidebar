@@ -19,6 +19,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -40,10 +41,10 @@ public class Produto {
 	@NotNull (message = "{qtdproduto.not.null}")
 	private Float qtd;
 	
-	@NotNull (message = "{valorcompra.not.null}")
+	@NotEmpty (message = "{valorcompra.not.null}")
 	private Double valorCompra;
 	
-	@NotNull (message = "{valorvenda.not.null}")
+	@NotEmpty (message = "{valorvenda.not.null}")
 	private Double valorVenda;
 	
 	@Column(name="data_validade")

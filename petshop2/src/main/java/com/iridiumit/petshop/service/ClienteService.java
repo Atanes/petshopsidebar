@@ -17,8 +17,12 @@ public class ClienteService{
 		
 	public List<Cliente> filtrar(ClienteFiltro filtro) {
 		
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
-		return clientes.findByNomeContainingIgnoreCaseAndAtivo(nome, true);
+		if(filtro.getNome() == null) {
+			return clientes.findAll();
+		}else {
+			return clientes.findByNomeContainingIgnoreCaseAndAtivo(filtro.getNome(), true);
+		}
+		
 	}
 	
 	public void excluir(Long codigo) {

@@ -60,7 +60,7 @@
 				<input type="hidden" th:field="*{id}" />
 				<input type="hidden" th:field="*{endereco}" />
 				
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-2">
 						<div class="form-group">
@@ -92,7 +92,7 @@
 					
 				</div>
 				
-				<div class="row">
+				<div class="form-row">
 				
 					<div class="col-sm-2 form-group">
 						<label class="campo_obrigatorio" for="telefone1">Telefone principal</label>
@@ -116,7 +116,7 @@
 					
 				</div>
 				
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-3">
 						<div class="form-group">
@@ -145,7 +145,7 @@
 				
 				</div>
 				
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-3">
 						<div class="form-group">
@@ -169,12 +169,12 @@
 				</div>
 				
 				<div class="container">
-					<div class="row justify-content-between">
+					<div class="form-row justify-content-between">
 						
-						<button class="btn  btn-primary btn-sm col-sm-1 "type="submit" title="Salvar">
+						<button class="btn  btn-primary btn-sm col-sm-2 "type="submit" title="Salvar">
 							<i class="far fa-save"></i> Salvar
 						</button>
-						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-1"
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
 							th:href="@{/administracao/usuarios}" th:title="'Cancelar operação'"> 
 							<i class="far fa-window-close"></i> Cancelar
 						</a>

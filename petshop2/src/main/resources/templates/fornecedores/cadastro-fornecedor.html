@@ -50,63 +50,61 @@
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="row">
+				<div class="form-row">
 					
-					<div class="col-sm-6">
+					<div class="col-sm-8">
 						<div class="form-group">
-							<label for="nome">Nome<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="nome">Nome</label>
 							<input id="nome" type="text" class="form-control" th:field="*{nome}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label for="cnpj">CNPJ<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="cnpj">CNPJ</label>
 							<input id="cnpj" type="text" class="form-control cnpj" th:field="*{cnpj}" />
 						</div>
 					</div>
-					
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="ie">Inscrição Estadual</label>
-							<input id="ie" type="text" class="form-control" th:field="*{ie}" />
-						</div>
-					</div>
+
 				</div>
 
-				<div class="row">
-				
+				<div class="form-row">
 					<div class="col-sm-2">
+						<div class="form-group" title="Inscrição Estadual">
+							<label for="ie">I. E.</label>
+							<input id="ie" type="text" class="form-control" th:field="*{ie}"/>
+						</div>
+					</div>
+					<div class="col-sm-4">
 						<div class="form-group">
-							<label for="contato">Contato<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="contato">Contato</label>
 							<input id="contato"	type="text" class="form-control" th:field="*{contato}"/>
 						</div>
 					</div>
 					
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="telefone">Telefone<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="telefone">Telefone</label>
 							<input id="telefone" type="text" class="form-control fone" th:field="*{telefone}" />
 						</div>
 					</div>
 					
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="celular">Celular<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="celular">Celular</label>
 							<input id="celular"	type="text" class="form-control fone" th:field="*{celular}" />
-						</div>
-					</div>
-					
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="email">E-mail<span class="obrigatorio"> *</span></label>
-							<input id="email" type="text" class="form-control" th:field="*{email}" />
 						</div>
 					</div>
 					
 				</div>
 
-				<div class="row">
+				<div class="form-row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="campo_obrigatorio" for="email">E-mail</label>
+							<input id="email" type="text" class="form-control" th:field="*{email}" />
+						</div>
+					</div>
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label for="site">Site</label>
@@ -116,12 +114,12 @@
 				</div>
 
 				<div class="container">
-					<div class="row justify-content-between">
+					<div class="form-row justify-content-between">
 						
-						<button class="btn  btn-primary btn-sm col-sm-1 "type="submit" title="Salvar">
+						<button class="btn  btn-primary btn-sm col-sm-2" type="submit" title="Salvar">
 							<i class="far fa-save"></i> Salvar
 						</button>
-						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-1"
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
 							th:href="@{/fornecedores}" th:title="'Cancelar operação'"> 
 							<i class="far fa-window-close"></i> Cancelar
 						</a>

@@ -37,23 +37,30 @@ public class ProdutoController {
 		String descricao = filtro.getDescricao() == null ? "%" : filtro.getDescricao();
 		
 		ModelAndView modelAndView = new ModelAndView("produtos/lista-produtos");
-
-		modelAndView.addObject("produtos", produtos.findByDescricaoContainingIgnoreCase(descricao));
+		
+		if(filtro.getDescricao() == null) {
+			modelAndView.addObject("produtos", produtos.findAll());
+		}else {
+			modelAndView.addObject("produtos", produtos.findByDescricaoContainingIgnoreCase(descricao));
+		}
+		
 		return modelAndView;
 	}
 	
 	@GetMapping("/selecao/{id}")
 	public ModelAndView SelecaoPorFornecedor(@PathVariable Long id, @ModelAttribute("filtro") ProdutoFiltro filtro) {
 
-		String descricao = filtro.getDescricao() == null ? "%" : filtro.getDescricao();
-		
 		Fornecedor f = fornecedores.getOne(id);
 
 		ModelAndView modelAndView = new ModelAndView("fornecedores/lista-fornecedor-e-produtos");
 
 		modelAndView.addObject(f);
-
-		modelAndView.addObject("produtos", produtos.findByFornecedorAndDescricaoContainingIgnoreCase(f, descricao));
+		
+		if(filtro.getDescricao() == null) {
+			modelAndView.addObject("produtos", produtos.findByFornecedor(f));
+		}else {
+			modelAndView.addObject("produtos", produtos.findByFornecedorAndDescricaoContainingIgnoreCase(f, filtro.getDescricao()));
+		}
 
 		return modelAndView;
 
