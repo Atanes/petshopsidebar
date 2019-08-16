@@ -16,12 +16,11 @@
 		<div class="col-md-2 float-left col-1 pl-0 pr-0 collapse width"	id="sidebar">
 				<div class="list-group border-0 card text-center text-md-left">
 					<a href="#perfil" class="list-group-item d-inline-block collapsed" data-toggle="collapse" 
-						data-parent="#sidebar" aria-label="Toggle navigation">
+						data-parent="#sidebar" aria-expanded="false" aria-label="Toggle navigation">
 						<img class="inset" src="http://rs775.pbsrc.com/albums/yy35/PhoenyxStar/link-1.jpg~c200">
-							&nbsp;<span	class="d-none d-md-inline"><span th:text="${#authentication.principal.nome}"></span>
-								<i class="fas fa-caret-right"></i>
-	    						<i class="fas fa-caret-down"></i>
-	    					</span>
+							&nbsp;<span	class="d-none d-md-inline" th:text="${#authentication.principal.nome}"></span>
+						<i class="fas fa-caret-right"></i>
+	    				<i class="fas fa-caret-down"></i>
                 	</a>
                 	<div class="collapse" id="perfil">
 						<a href="#meusdados" class="list-group-item">
