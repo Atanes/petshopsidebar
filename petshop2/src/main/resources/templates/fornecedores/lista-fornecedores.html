@@ -8,7 +8,7 @@
 
 <body>
 
-	<section class="aw-layout-content  js-content layout-pagina"
+	<section class="aw-layout-content js-content layout-pagina"
 		layout:fragment="content">
 
 		<h1 class="titulo-formulario">
@@ -20,26 +20,27 @@
 			<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
 				sucesso!</span>
 		</div>
-
-		<div class="pesquisa">
-			<form method="GET" class="form-inline" action="/fornecedores"
-				th:object="${filtro}">
-				<div class="input-group col-sm-4">
-					<input class="form-control"
-						placeholder="Qual fornecedor você está procurando?"
-						autofocus="autofocus" th:field="*{nome}">
-					<div class="input-group-append">
-						<button type="submit" class="btn btn-default">
-							<i class="fas fa-search"></i>
-						</button>
+		<div class="form-row">
+			<div class="pesquisa">
+				<form method="GET" class="form-inline" action="/fornecedores"
+					th:object="${filtro}">
+					<div class="input-group">
+						<input class="form-control"
+							placeholder="Qual fornecedor você está procurando?"
+							autofocus="autofocus" th:field="*{nome}">
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-default">
+								<i class="fas fa-search"></i>
+							</button>
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 		<div class="form-row">
 			<div class="table-responsive-sm col-sm-12">
 				<table id="tabela-produtos"
-					class="table  table-sm table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					class="table table-sm table-striped table-bordered table-hover table-sm js-sticky-table">
 					<thead>
 						<tr>
 							<th scope="col">CNPJ - Nome</th>
@@ -55,8 +56,9 @@
 								th:text="${fornecedor.contato} + ', ' + ${fornecedor.telefone}">123</td>
 							<td th:text="${fornecedor.email}">123</td>
 							<td class="text-center">
-								<form method="POST" th:onsubmit="'return confirm(\'Posso remover o fornecedor: ' + 
-									${fornecedor.nome} + ' da base de dados?\');'"
+								<form method="POST"
+									th:onsubmit="'return confirm(\'Posso remover o fornecedor: ' + 
+								${fornecedor.nome} + ' da base de dados?\');'"
 									th:action="@{/fornecedores/excluir/{id}(id=${fornecedor.id})}">
 									<a class="btn btn-primary btn-sm"
 										th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}"
@@ -74,7 +76,7 @@
 						</tr>
 
 						<tr>
-							<td colspan="7" th:if="${fornecedores.empty}">Nenhum
+							<td colspan="4" th:if="${fornecedores.empty}">Nenhum
 								fornecedor cadastrado!!!</td>
 						</tr>
 					</tbody>

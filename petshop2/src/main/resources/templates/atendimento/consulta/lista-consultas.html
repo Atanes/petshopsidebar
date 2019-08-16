@@ -8,17 +8,20 @@
 
 <body>
 
-	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
-		
-			<h1 class="titulo-formulario"><i class="fas fa-list"></i>Consultas</h1>
-			
-			<div class="alert  alert-success"
-				th:if="${!#strings.isEmpty(mensagem)}">
-				<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
-					sucesso!</span>
-			</div>
-			
-			<div class="table-responsive-sm">
+	<section class="aw-layout-content js-content layout-pagina"
+		layout:fragment="content">
+
+		<h1 class="titulo-formulario">
+			<i class="fas fa-list"></i>Consultas
+		</h1>
+
+		<div class="alert  alert-success"
+			th:if="${!#strings.isEmpty(mensagem)}">
+			<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+				sucesso!</span>
+		</div>
+		<div class="form-row">
+			<div class="table-responsive-sm col-sm-12">
 				<table id="tabela-produtos"
 					class="table  table-sm table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
 					<thead>
@@ -43,12 +46,12 @@
 									th:onsubmit="'return confirm(\'Posso remover a consulta: ' + 
 								${consulta.codigo} + ' relativa ao ' + ${consulta.animal.nome} + ' da base de dados?\');'"
 									th:action="@{/atendimento/consultas/excluir/{codigo}(codigo=${consulta.codigo})}">
-									<input type="hidden" name="_method" value="DELETE" />
-									<a class="btn btn-warning btn-sm"
+									<input type="hidden" name="_method" value="DELETE" /> <a
+										class="btn btn-warning btn-sm"
 										th:href="@{/atendimento/consultas/atender/{codigo}(codigo=${consulta.codigo})}"
-										th:title="'Realizar Consulta'"> <span class="fa fa-user-md acoes"></span>
-									</a>
-									<a class="btn btn-primary btn-sm"
+										th:title="'Realizar Consulta'"> <span
+										class="fa fa-user-md acoes"></span>
+									</a> <a class="btn btn-primary btn-sm"
 										th:href="@{/atendimento/consultas/{codigo}(codigo=${consulta.codigo})}"
 										th:title="Editar"> <span class="fa fa-pencil-alt acoes"></span>
 									</a>
@@ -61,12 +64,14 @@
 						</tr>
 
 						<tr>
-							<td colspan="7" th:if="${consultas.empty}">Nenhuma consulta	cadastrada!!</td>
+							<td colspan="6" th:if="${consultas.empty}">Nenhuma consulta
+								cadastrada!!</td>
 						</tr>
 
 					</tbody>
 				</table>
 			</div>
+		</div>
 	</section>
 </body>
 </html>

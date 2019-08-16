@@ -56,11 +56,6 @@
 	background-color: #484848;
 	color: #fff;
 	position: relative;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	max-height: 15vh;
-	z-index: 1;
 }
 
 @media ( max-width : 749px) {
@@ -85,7 +80,22 @@
 /*------- Definições para as páginas de cadastro e pesquisa -------*/
 
 .layout-pagina {
-	padding: 10px 0;
+	padding-bottom: 15px;
+}
+
+.layout-cabecalho {
+	height: 50px;
+	line-height: 50px;
+	border-bottom: 1px solid #ccc;
+	background-color: #fff;
+}
+
+.layout-cabecalho--home {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 9999;
 }
 
 .titulo-formulario {
@@ -96,12 +106,17 @@
 	font-weight: normal;
 }
 
-.titulo-lista {
-	margin-top: 15px;
-}
-
 .titulo-formulario i {
 	margin-right: 5px;
+}
+
+.layout-menu {
+	background-color: #e3f2fd;
+	color: black;
+}
+
+.titulo-lista {
+	margin-top: 15px;
 }
 
 .pesquisa {
@@ -120,9 +135,16 @@
 	font-weight: bold;
 }
 
+.table-sm .btn-sm {
+	font-size: .7em;
+}
+
+.table-sm td {
+	padding: .1rem;
+}
+
 .form-group p {
 	margin-top: 0;
 	padding-top: 0;
 	line-height: 1;
 }
-

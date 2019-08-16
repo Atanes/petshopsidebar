@@ -24,12 +24,12 @@
 
 <body style="background-color: #f9f9f9">
 	<div class="imagem-cliente-login">
-		<a th:href="www.petshop.com.br"> <img class="logo_petshop"
+		<a th:href="www.petshop.com.br"> <img class="logo_petshop img-fluid"
 			th:src="@{/images/petshop.png}">
 		</a>
 	</div>
-	<div class="row">
-		<div class="col-sm-4 offset-sm-4">
+	<div class="container">
+		<div class="col-sm-6 offset-sm-3">
 			<div th:if="${param.error}">
 				<div class="alert alert-danger">Usuário e/ou senha inválidos!</div>
 			</div>

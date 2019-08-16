@@ -6,7 +6,7 @@
 <head>
 	<title>Cadastro de Fornecedores</title>
 	<script th:src="@{/js/BuscaCEP.js}"></script>
-	<script th:src="@{/javascripts/jquery.mask.min.js}"></script>
+	<script th:src="@{/js/jquery.mask.min.js}"></script>
 	<script th:src="@{/js/mascaras.js}"></script>
 	<script th:src="@{/webjars/jquery.inputmask/4.0.5/jquery.inputmask.bundle.js}"></script>
 	<script type="text/javascript">
@@ -22,110 +22,119 @@
 </head>
 
 <body>
-	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
-		
-			<h1 class="titulo-formulario"><i class="fas fa-industry"></i>Cadastro de fornecedor</h1>
+	<section class="aw-layout-content js-content layout-pagina"
+		layout:fragment="content">
 
-			<form method="POST" class="form-vertical  js-form-loading"
-				th:object="${fornecedor}" th:action="@{/fornecedores/salvar}">
-				
-				<div class="alert  alert-danger  alert-dismissible" role="alert"
-					th:if="${#fields.hasAnyErrors()}">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+		<h1 class="titulo-formulario">
+			<i class="fas fa-industry"></i>Cadastro de fornecedor
+		</h1>
+
+		<form method="POST" class="form-vertical js-form-loading"
+			th:object="${fornecedor}" th:action="@{/fornecedores/salvar}">
+
+			<div class="alert  alert-danger  alert-dismissible" role="alert"
+				th:if="${#fields.hasAnyErrors()}">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+
+				<div th:each="erro: ${#fields.detailedErrors()}">
+					<i class="fa fa-exclamation-circle"></i> <span
+						th:text="${erro.message}">Mensagem erro.</span>
+				</div>
+			</div>
+
+			<div class="alert  alert-success"
+				th:if="${!#strings.isEmpty(mensagem)}">
+				<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+					sucesso!</span>
+			</div>
+
+			<input type="hidden" th:field="*{id}" />
+
+			<div class="form-row">
+
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="nome">Nome</label> <input
+							id="nome" type="text" class="form-control" th:field="*{nome}" />
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="cnpj">CNPJ</label> <input
+							id="cnpj" type="text" class="form-control cnpj"
+							th:field="*{cnpj}" />
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<div class="form-group" title="Inscrição Estadual">
+						<label for="ie">I. E.</label> <input id="ie"
+							type="text" class="form-control" th:field="*{ie}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="form-row">
+
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="contato">Contato</label> <input
+							id="contato" type="text" class="form-control"
+							th:field="*{contato}" />
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="telefone">Telefone</label> <input
+							id="telefone" type="text" class="form-control fone"
+							th:field="*{telefone}" />
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="celular">Celular</label> <input
+							id="celular" type="text" class="form-control fone"
+							th:field="*{celular}" />
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="email">E-mail</label> <input
+							id="email" type="text" class="form-control" th:field="*{email}" />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="form-row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="site">Site</label> <input id="site" type="text"
+							class="form-control" th:field="*{site}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="container">
+				<div class="form-row justify-content-between">
+					<button class="btn btn-primary btn-sm col-sm-2" type="submit"
+						title="Salvar">
+						<i class="far fa-save"></i> Salvar
 					</button>
-
-					<div th:each="erro: ${#fields.detailedErrors()}">
-						<i class="fa fa-exclamation-circle"></i>
-						<span th:text="${erro.message}">Mensagem erro.</span>
-					</div>
+					<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
+						th:href="@{/fornecedores}" th:title="'Cancelar operação'"> <i
+						class="far fa-window-close"></i> Cancelar
+					</a>
 				</div>
-
-				<div class="alert  alert-success"
-					th:if="${!#strings.isEmpty(mensagem)}">
-					<i class="fa fa-check-circle"></i>
-					<span th:text="${mensagem}">Mensagem sucesso!</span>
-				</div>
-
-				<input type="hidden" th:field="*{id}" />
-
-				<div class="form-row">
-					
-					<div class="col-sm-8">
-						<div class="form-group">
-							<label class="campo_obrigatorio" for="nome">Nome</label>
-							<input id="nome" type="text" class="form-control" th:field="*{nome}" />
-						</div>
-					</div>
-					
-					<div class="col-sm-4">
-						<div class="form-group">
-							<label class="campo_obrigatorio" for="cnpj">CNPJ</label>
-							<input id="cnpj" type="text" class="form-control cnpj" th:field="*{cnpj}" />
-						</div>
-					</div>
-
-				</div>
-
-				<div class="form-row">
-					<div class="col-sm-2">
-						<div class="form-group" title="Inscrição Estadual">
-							<label for="ie">I. E.</label>
-							<input id="ie" type="text" class="form-control" th:field="*{ie}"/>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="form-group">
-							<label class="campo_obrigatorio" for="contato">Contato</label>
-							<input id="contato"	type="text" class="form-control" th:field="*{contato}"/>
-						</div>
-					</div>
-					
-					<div class="col-sm-3">
-						<div class="form-group">
-							<label class="campo_obrigatorio" for="telefone">Telefone</label>
-							<input id="telefone" type="text" class="form-control fone" th:field="*{telefone}" />
-						</div>
-					</div>
-					
-					<div class="col-sm-3">
-						<div class="form-group">
-							<label class="campo_obrigatorio" for="celular">Celular</label>
-							<input id="celular"	type="text" class="form-control fone" th:field="*{celular}" />
-						</div>
-					</div>
-					
-				</div>
-
-				<div class="form-row">
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label class="campo_obrigatorio" for="email">E-mail</label>
-							<input id="email" type="text" class="form-control" th:field="*{email}" />
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="site">Site</label>
-							<input id="site" type="text" class="form-control" th:field="*{site}" />
-						</div>
-					</div>
-				</div>
-
-				<div class="container">
-					<div class="form-row justify-content-between">
-						
-						<button class="btn  btn-primary btn-sm col-sm-2" type="submit" title="Salvar">
-							<i class="far fa-save"></i> Salvar
-						</button>
-						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
-							th:href="@{/fornecedores}" th:title="'Cancelar operação'"> 
-							<i class="far fa-window-close"></i> Cancelar
-						</a>
-					</div>
-				</div>
-			</form>
+			</div>
+		</form>
 	</section>
 </body>
 </html>

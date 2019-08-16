@@ -22,7 +22,11 @@ $(function() {
 		reverse : true
 	});
 	$('.mixed').mask('AAA 000-S0S');
+	$('.sonumeros').mask('0#');
 	$('.cpf').mask('000.000.000-00', {
+		reverse : true
+	});
+	$('.cnpj').mask('00.000.000/0000-00', {
 		reverse : true
 	});
 	$('.telefone').mask('(00) 0 0000-0000');
@@ -33,48 +37,49 @@ $(function() {
 		reverse : true
 	});
 	$('.estado').mask('AA');
-	$('.cnpj').mask('00.000.000/0000-00');
-	$('.rg').mask('00.000.000-*');
+	$('.rg').mask('00.000.000-A');
 	$('.placaCarro').mask('AAA-0000');
 	$('.horasMinutos').mask('00:00');
 	$('.cartaoCredito').mask('0000 0000 0000 0000');
-	$('.percent').mask('00,0%', {reverse: true});
-	$('.percent2').mask('00,0', {reverse: true});
-	
+	$('.percent').mask('00,0%', {
+		reverse : true
+	});
+	$('.percent2').mask('00,0', {
+		reverse : true
+	});
+
 	$('.porcentagem').mask('P', {
-	    translation: {
-	        'P': {
-	            pattern: /[\d\.,]/,
-	            recursive: true
-	        }
-	    },
-	    onKeyPress: function(val, e, field, options) {
-	        var old_value = $(field).data('oldValue') || '';
+		translation : {
+			'P' : {
+				pattern : /[\d\.,]/,
+				recursive : true
+			}
+		},
+		onKeyPress : function(val, e, field, options) {
+			var old_value = $(field).data('oldValue') || '';
 
-	        val = val.trim();
-	        val = val.replace(',', '.');
-	        val = val.length > 0 ? val : '0';
+			val = val.trim();
+			val = val.replace(',', '.');
+			val = val.length > 0 ? val : '0';
 
-	        // Transformando múltiplos pontos em um único ponto
-	        val = val.replace(/[\.]+/, '.');
+			// Transformando múltiplos pontos em um único ponto
+			val = val.replace(/[\.]+/, '.');
 
-	        // Verificando se o valor contém mais de uma ocorrência de ponto
-	        var dot_occurrences = (val.match(/\./g) || []).length > 1;
+			// Verificando se o valor contém mais de uma ocorrência de ponto
+			var dot_occurrences = (val.match(/\./g) || []).length > 1;
 
-	        // Verificando se o valor está de acordo com a sintaxe do float
-	        var is_float = /[-+]?[\d]*\.?[\d]+/.test(val);
+			// Verificando se o valor está de acordo com a sintaxe do float
+			var is_float = /[-+]?[\d]*\.?[\d]+/.test(val);
 
-	        if (dot_occurrences || !is_float) {
-	            val = old_value;
-	        }
+			if (dot_occurrences || !is_float) {
+				val = old_value;
+			}
 
-	        // Força o valor a ficar no intervalo de 0 à 100
-	        val = parseFloat(val) >= 100 ? '100' : val;
-	        val = parseFloat(val) <  0   ? '0'   : val;
+			// Força o valor a ficar no intervalo de 0 à 100
+			val = parseFloat(val) >= 100 ? '100' : val;
+			val = parseFloat(val) < 0 ? '0' : val;
 
-	        $(field)
-	            .val(val)
-	            .data('oldValue', val);
-	    }
+			$(field).val(val).data('oldValue', val);
+		}
 	});
 });

@@ -20,10 +20,10 @@
 </head>
 
 <body>
-	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
+		<section class="aw-layout-content js-content layout-pagina" layout:fragment="content">
 		
 			<h1 class="titulo-formulario"><i class="fas fa-user-edit"></i>
-			Editar usuário: <span class="text-primary" th:text="${usuario.cpf}"></span> </h1>
+			&nbsp;Editar usuário: <span class="nomeDestaque" th:text="${usuario.cpf}"></span> </h1>
 			
 
 			<form name="formulario" method="POST" class="form-vertical  js-form-loading"
@@ -56,12 +56,12 @@
 				
 				<div class="form-row">
 				
-					<div class="col-sm-2 form-group">
+					<div class="col-sm-3 form-group">
 						<label for="login">Login</label>
 						<input id="login" type="text" class="form-control" th:field="*{login}" readonly/>
 					</div>
 					
-					<div class="col-sm-4 form-group">
+					<div class="col-sm-5 form-group">
 						<label class="campo_obrigatorio" for="nome">Nome</label>
 						<input id="nome" type="text" class="form-control" th:field="*{nome}" />
 					</div>
@@ -71,7 +71,11 @@
 						<input id="email" type="text" class="form-control" th:field="*{email}" />
 					</div>
 					
-					<div class="col-sm-2 form-group">
+				</div>
+				
+				<div class="form-row">
+				
+					<div class="col-sm-3 form-group">
 						<label class="campo_obrigatorio" for="permissao">Permissão</label>
 						
 						<select id="permissao" class="form-control" th:field="*{permissoes}">
@@ -79,10 +83,6 @@
 							th:value="${permissao.id}" th:text="${#strings.substring(permissao.nome,8)}">Opção 1</option>
 						</select>
 					</div>
-					
-				</div>
-				
-				<div class="form-row">
 				
 					<div class="col-sm-2 form-group">
 						<label class="campo_obrigatorio" for="telefone1">Telefone principal</label>
@@ -158,7 +158,8 @@
 				</div>
 				
 				<div class="container">
-					<div class="row justify-content-between">
+					<div class="form-row justify-content-between">
+						
 						<button class="btn  btn-primary btn-sm col-sm-2" type="submit" title="Salvar">
 							<i class="far fa-save"></i> Salvar
 						</button>

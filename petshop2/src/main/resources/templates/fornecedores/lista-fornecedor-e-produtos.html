@@ -8,84 +8,87 @@
 
 <body>
 
-	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
+	<section class="aw-layout-content js-content layout-pagina"
+		layout:fragment="content">
 
-			<h1 class="titulo-formulario">
-				<i class="far fa-handshake"></i>Fornecedor: <span
-					class="nomeDestaque" th:text="${fornecedor.nome}"></span>
-			</h1>
+		<h1 class="titulo-formulario">
+			<i class="far fa-handshake"></i>Fornecedor: <span
+				class="text-primary" th:text="${fornecedor.nome}"></span>
+		</h1>
 
-			<div class="alert  alert-success"
-				th:if="${!#strings.isEmpty(mensagem)}">
-				<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
-					sucesso!</span>
-			</div>
+		<div class="alert  alert-success"
+			th:if="${!#strings.isEmpty(mensagem)}">
+			<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+				sucesso!</span>
+		</div>
 
-			<input type="hidden" th:field="*{id}" />
+		<input type="hidden" th:field="*{id}" />
 
-			<div class="row">
+		<div class="row">
 
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label>CNPJ</label>
-						<p class="form-group text-primary" th:text="${fornecedor.cnpj}"></p>
-					</div>
-				</div>
-
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label>Contato</label>
-						<p class="form-group text-primary" th:text="${fornecedor.contato}"></p>
-					</div>
-				</div>
-
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label>Telefone</label>
-						<p class="form-group text-primary" th:text="${fornecedor.telefone}"></p>
-					</div>
-				</div>
-
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label>Celular</label>
-						<p class="form-group text-primary" th:text="${fornecedor.celular}"></p>
-					</div>
-				</div>
-
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label>E-mail</label>
-						<p class="form-group text-primary" th:text="${fornecedor.email}"></p>
-					</div>
-				</div>
-
-			</div>
-
-			<div class="container">
-				<div class="row justify-content-between">
-
-					<a id="btnincluirproduto" class="btn btn-success btn-sm col-sm-2"
-						th:href="@{/fornecedores/produtos/incluirProduto/{id}(id=${fornecedor.id})}"
-						th:title="'Incluir Produtos'"> <span class="fas fa-dolly"></span>
-						Produto
-					</a> <a id="btneditarcliente" class="btn btn-primary btn-sm col-sm-2"
-						th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}"
-						th:title="'Editar Fornecedor'"> <span class="fa fa-pencil-alt"></span>
-						Editar
-					</a>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label>CNPJ</label>
+					<p class="form-group text-primary" th:text="${fornecedor.cnpj}"></p>
 				</div>
 			</div>
 
-			<h1 class="titulo-formulario">
-				<i class="fas fa-list"></i>Produtos
-			</h1>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label>Contato</label>
+					<p class="form-group text-primary" th:text="${fornecedor.contato}"></p>
+				</div>
+			</div>
 
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label>Telefone</label>
+					<p class="form-group text-primary" th:text="${fornecedor.telefone}"></p>
+				</div>
+			</div>
+
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label>Celular</label>
+					<p class="form-group text-primary" th:text="${fornecedor.celular}"></p>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label>E-mail</label>
+					<p class="form-group text-primary" th:text="${fornecedor.email}"></p>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="container">
+			<div class="form-row justify-content-between">
+
+				<a id="btnincluirproduto" class="btn btn-success btn-sm col-sm-2"
+					th:href="@{/fornecedores/produtos/incluirProduto/{id}(id=${fornecedor.id})}"
+					th:title="'Incluir Produtos'"> <span class="fas fa-dolly"></span>
+					Produto
+				</a> <a id="btneditarcliente" class="btn btn-primary btn-sm col-sm-2"
+					th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}"
+					th:title="'Editar Fornecedor'"> <span class="fa fa-pencil-alt"></span>
+					Editar
+				</a>
+			</div>
+		</div>
+
+		<h1 class="titulo-formulario titulo-lista">
+			<i class="fas fa-list"></i>Produtos
+		</h1>
+		<div class="form-row col-sm-6">
 			<div class="pesquisa">
 				<form method="GET" class="form-inline"
-					th:action="@{/fornecedores/produtos/selecao/{id}(id=${fornecedor.id})}" th:object="${filtro}">
-					<div class="input-group col-sm-4">
-						<input class="form-control"	placeholder="Qual produto você está procurando?"
+					th:action="@{/fornecedores/produtos/selecao/{id}(id=${fornecedor.id})}"
+					th:object="${filtro}">
+					<div class="input-group">
+						<input class="form-control"
+							placeholder="Qual produto você está procurando?"
 							autofocus="autofocus" th:field="*{descricao}">
 						<div class="input-group-append">
 							<button type="submit" class="btn btn-default">
@@ -95,10 +98,11 @@
 					</div>
 				</form>
 			</div>
-			<div class="form-row">
+		</div>
+		<div class="form-row">
 			<div class="table-responsive-sm col-sm-12">
 				<table id="tabela-produtos"
-					class="table  table-sm table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					class="table  table-sm table-striped table-bordered table-hover table-condensed js-sticky-table">
 					<thead>
 						<tr>
 							<th scope="col" class="text-center">Código</th>
@@ -125,9 +129,8 @@
 							<td class="text-center"
 								th:text="${produto.convertValorToMoney(produto.valorVenda)}">valorvenda</td>
 
-							<td class="text-center" 
-								th:text="${produto.lote}">lote</td>
-							
+							<td class="text-center" th:text="${produto.lote}">lote</td>
+
 							<td class="text-center"
 								th:text="${produto.getDataFormatada(produto.data_validade)}">validade</td>
 
@@ -150,13 +153,13 @@
 						</tr>
 
 						<tr>
-							<td colspan="7" th:if="${produtos.empty}">Nenhum Produto
+							<td colspan="8" th:if="${produtos.empty}">Nenhum Produto
 								cadastrado na base de dados!</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			</div>
+		</div>
 	</section>
 </body>
 </html>

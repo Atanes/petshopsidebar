@@ -6,7 +6,7 @@
 <head>
 	<title>Cadastro de Clientes</title>
 	<script th:src="@{/js/BuscaCEP.js}"></script>
-	<script th:src="@{/javascripts/jquery.mask.min.js}"></script>
+	<script th:src="@{/js/jquery.mask.min.js}"></script>
 	<script th:src="@{/js/mascaras.js}"></script>
 	<script th:src="@{/webjars/jquery.inputmask/4.0.5/jquery.inputmask.bundle.js}"></script>
 	<script type="text/javascript">
@@ -22,7 +22,7 @@
 </head>
 
 <body>
-	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
+	<section class="aw-layout-content js-content layout-pagina" layout:fragment="content">
 		
 			<h1 class="titulo-formulario"><i class="fas fa-user-plus"></i>Cadastro de cliente</h1>
 			
@@ -51,24 +51,24 @@
 				<input type="hidden" th:field="*{id}" />
 				<input type="hidden" th:field="*{endereco}" />
 
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-6">
 						<div class="form-group">
-							<label for="nome">Nome<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatório" for="nome">Nome</label>
 							<input id="nome" type="text" class="form-control" th:field="*{nome}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="data_nasc">Data de nascimento<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatório" for="data_nasc">Data de nascimento</label>
 							<input	id="data_nasc" type="date" class="form-control"	th:field="*{data_nasc}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
-						<label for="sexo">Sexo<span class="obrigatorio"> *</span></label>
+						<label class="campo_obrigatório" for="sexo">Sexo</label>
 							<select	id="sexo" class="form-control" th:field="*{sexo}">
 									<option value="">Selecione o sexo</option>
 									<option value="Feminino">Feminino</option>
@@ -79,11 +79,11 @@
 					
 				</div>
 				
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="cpf">CPF<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatório" for="cpf">CPF</label>
 							<input id="cpf" type="text"	class="form-control cpf" placeholder="Ex: 000.000.000-00" th:field="*{cpf}" />
 						</div>
 					</div>
@@ -96,7 +96,7 @@
 					</div>
 				
 					<div class="col-sm-2 form-group">
-						<label for="telefone1">Telefone principal<span class="obrigatorio"> *</span></label>
+						<label class="campo_obrigatório" for="telefone1">Telefone principal</label>
 						<input id="telefone1" type="text" class="form-control fone" th:field="*{telefone1}"/>
 					</div>
 							
@@ -106,13 +106,13 @@
 					</div>
 					
 					<div class="col-sm-4 form-group">
-						<label for="email">E-mail<span class="obrigatorio"> *</span></label>
+						<label class="campo_obrigatório" for="email">E-mail</label>
 						<input id="email" type="text" class="form-control" th:field="*{email}"/>
 					</div>
 					
 				</div>
 				
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-3">
 						<div class="form-group">
@@ -141,7 +141,7 @@
 				
 				</div>
 				
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-3">
 						<div class="form-group">
@@ -164,12 +164,12 @@
 				
 				</div>
 				<div class="container">
-					<div class="row justify-content-between">
+					<div class="form-row justify-content-between">
 						
-						<button class="btn  btn-primary btn-sm col-sm-1 "type="submit" title="Salvar">
+						<button class="btn  btn-primary btn-sm col-sm-2" type="submit" title="Salvar">
 							<i class="far fa-save"></i> Salvar
 						</button>
-						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-1"
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
 							th:href="@{/atendimento/clientes}" th:title="'Cancelar operação'"> 
 							<i class="far fa-window-close"></i> Cancelar
 						</a>

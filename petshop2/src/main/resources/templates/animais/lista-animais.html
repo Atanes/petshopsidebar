@@ -9,20 +9,25 @@
 
 <body>
 
-	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">
-		
-			<h1 class="titulo-formulario"><i class="fas fa-list"></i>Animais</h1>
-			
-			<div class="alert  alert-success"
-				th:if="${!#strings.isEmpty(mensagem)}">
-				<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
-					sucesso!</span>
-			</div>
-			
-			<div class="pesquisa">
-			<form method="GET" class="form-inline" action="/clientes/animais" th:object="${filtro}">
+	<section class="aw-layout-content js-content layout-pagina"
+		layout:fragment="content">
+
+		<h1 class="titulo-formulario">
+			<i class="fas fa-list"></i>Animais
+		</h1>
+
+		<div class="alert  alert-success"
+			th:if="${!#strings.isEmpty(mensagem)}">
+			<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+				sucesso!</span>
+		</div>
+
+		<div class="pesquisa">
+			<form method="GET" class="form-inline" action="/clientes/animais"
+				th:object="${filtro}">
 				<div class="input-group col-sm-4">
-					<input class="form-control" placeholder="Qual animal você está procurando?"
+					<input class="form-control"
+						placeholder="Qual animal você está procurando?"
 						autofocus="autofocus" th:field="*{nome}"></input>
 					<div class="input-group-append">
 						<button type="submit" class="btn btn-default">
@@ -31,10 +36,8 @@
 					</div>
 				</div>
 			</form>
-			</div>
-			
-			<div class="form-row">
-
+		</div>
+		<div class="form-row">
 			<div class="table-responsive-sm col-sm-12">
 				<table id="tabela-animais"
 					class="table  table-sm table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
@@ -54,19 +57,18 @@
 						<tr th:each="animal: ${animais}">
 							<td class="col-md-1 text-center" th:text="${animal.id}">a1</td>
 
-							<td>
-								<a class="btn btn-info btn-xs" th:href="@{/atendimento/consultas/novo/{id}(id=${animal.id})}"
-										th:title="'Incluir Consultas'"> <span class="fa fa-user-md acoes"></span>
-									</a>
-									<span th:text="${animal.nome}"></span>
-								</td>
-								
+							<td><a class="btn btn-info btn-xs"
+								th:href="@{/atendimento/consultas/novo/{id}(id=${animal.id})}"
+								th:title="'Incluir Consultas'"> <span
+									class="fa fa-user-md acoes"></span>
+							</a> <span th:text="${animal.nome}"></span></td>
+
 							<td th:text="${animal.getDataFormatada(animal.data_nasc)}">data_nasc</td>
-							
+
 							<td th:text="${animal.raca}">raca</td>
 
 							<td th:text="${animal.especie}">especie</td>
-							
+
 							<td th:text="${animal.getPedigree()}">pedigree</td>
 
 							<td th:text="${animal.cliente.nome}">cliente</td>
@@ -76,13 +78,16 @@
 									th:onsubmit="'return confirm(\'Posso remover o animal: ' + 
 								${animal.nome} + ' da base de dados?\');'"
 									th:action="@{/clientes/animais/excluir/{id}(id=${animal.id})}">
-									<a class="btn btn-success btn-sm" th:href="@{/clientes/animais/servicos/{id}(id=${animal.id})}"
-										th:title="'Incluir Serviços'"> <span class="fa fa-cart-arrow-down acoes"></span>
-									</a>
-									<a class="btn btn-primary btn-sm" th:href="@{/clientes/animais/{id}(id=${animal.id})}"
+									<a class="btn btn-success btn-sm"
+										th:href="@{/clientes/animais/servicos/{id}(id=${animal.id})}"
+										th:title="'Incluir Serviços'"> <span
+										class="fa fa-cart-arrow-down acoes"></span>
+									</a> <a class="btn btn-primary btn-sm"
+										th:href="@{/clientes/animais/{id}(id=${animal.id})}"
 										th:title="Editar"> <span class="fa fa-pencil-alt acoes"></span>
 									</a>
-									<button type="submit" class="btn btn-danger btn-sm" title="Excluir">
+									<button type="submit" class="btn btn-danger btn-sm"
+										title="Excluir">
 										<span class="far fa-trash-alt acoes"></span>
 									</button>
 								</form>
@@ -90,13 +95,13 @@
 						</tr>
 
 						<tr>
-							<td colspan="7" th:if="${animais.empty}">Nenhum Animal cadastrado na base de dados!</td>
+							<td colspan="8" th:if="${animais.empty}">Nenhum Animal
+								cadastrado na base de dados!</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</section>
-
 </body>
 </html>

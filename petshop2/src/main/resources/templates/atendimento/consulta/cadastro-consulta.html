@@ -7,10 +7,10 @@
 </head>
 
 <body>
-	<section class="aw-layout-content  js-content layout-pagina" layout:fragment="content">	
+	<section class="aw-layout-content js-content layout-pagina" layout:fragment="content">	
 		
 			<h1 class="titulo-formulario"><i class="fas fa-notes-medical"></i>
-				Cadastro de consulta para o animal: <span class="nomeDestaque" th:text="${consulta.animal.nome}"></span>
+				Cadastro de consulta para o animal: <span class="text-primary" th:text="${consulta.animal.nome}"></span>
 			</h1>
 
 			<form name="formulario" method="POST" class="form-vertical  js-form-loading"
@@ -37,16 +37,8 @@
     			
 				<input type="hidden" th:field="*{codigo}" />
 				<input type="hidden" th:field="*{animal}" />
-				
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="status">Animal: <span th:text="${consulta.animal.nome}"></span></label>
-						</div>
-					</div>
-				</div>
 
-				<div class="row">
+				<div class="form-row">
 				
 					<div class="col-sm-2">
 						<div class="form-group">
@@ -89,8 +81,17 @@
 					</div>
 					
 				</div>
-				<div class="form-group">
-					<button class="btn  btn-primary" type="submit">Salvar</button>
+				<div class="container">
+					<div class="form-row justify-content-between">
+						
+						<button class="btn btn-primary btn-sm col-sm-2" type="submit" title="Salvar">
+							<i class="far fa-save"></i> Salvar
+						</button>
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
+							th:href="@{/atendimento/consultas}" th:title="'Cancelar operação'"> 
+							<i class="far fa-window-close"></i> Cancelar
+						</a>
+					</div>
 				</div>
 			</form>
 	</section>

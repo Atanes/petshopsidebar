@@ -39,63 +39,63 @@
 				<input type="hidden" th:field="*{animal}" />
 				<input type="hidden" th:field="*{usuario}" />
 				
-				<div class="row">
-					<div class="col-sm-3 dadosDestaque">
+				<div class="form-row">
+					<div class="col-sm-3">
 						<div class="form-group">
 							<label>Data da Consulta</label>
-							<p class="layout-cabecalho--consulta" th:text="${consulta.getDataAtendimentoFormatada()}"></p>
+							<p class="layout-cabecalho--consulta text-primary" th:text="${consulta.getDataAtendimentoFormatada()}"></p>
 						</div>
 					</div>
 					
-					<div class="col-sm-3 dadosDestaque">
+					<div class="col-sm-3">
 						<div class="form-group">
 							<label>Tipo</label>
-							<p class="layout-cabecalho--consulta" th:text="${consulta.tipo}"></p>
+							<p class="layout-cabecalho--consulta text-primary" th:text="${consulta.tipo}"></p>
 						</div>
 					</div>
 
-					<div class="col-sm-3 dadosDestaque">
+					<div class="col-sm-3">
 						<div class="form-group">
 							<label>Veterinário</label>
-							<p class="layout-cabecalho--consulta" th:text="${consulta.usuario.nome}"></p>
+							<p class="layout-cabecalho--consulta text-primary" th:text="${consulta.usuario.nome}"></p>
 						</div>
 					</div>
 					
-					<div class="col-sm-3 dadosDestaque">
+					<div class="col-sm-3">
 						<div class="form-group">
 							<label>Animal</label>
-							<p class="layout-cabecalho--consulta" th:text="${consulta.animal.nome}"></p>
+							<p class="layout-cabecalho--consulta text-primary" th:text="${consulta.animal.nome}"></p>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-3 dadosDestaque">
+				<div class="form-row">
+					<div class="col-sm-3">
 						<div class="form-group">
 							<label>Idade</label>
-							<p class="layout-cabecalho--consulta" th:text="${consulta.animal.getIdade()}"></p>
+							<p class="layout-cabecalho--consulta text-primary" th:text="${consulta.animal.getIdade()}"></p>
 						</div>
 					</div>
-					<div class="col-sm-3 dadosDestaque">
+					<div class="col-sm-3">
 						<div class="form-group">
 							<label>Raça</label>
-							<p class="layout-cabecalho--consulta" th:text="${consulta.animal.raca}"></p>
+							<p class="layout-cabecalho--consulta text-primary" th:text="${consulta.animal.raca}"></p>
 						</div>
 					</div>
-					<div class="col-sm-3 dadosDestaque">
+					<div class="col-sm-3">
 						<div class="form-group">
 							<label>Sexo</label>
-							<p class="layout-cabecalho--consulta" th:text="${consulta.animal.sexo}"></p>
+							<p class="layout-cabecalho--consulta text-primary" th:text="${consulta.animal.sexo}"></p>
 						</div>
 					</div>
-					<div class="col-sm-3 dadosDestaque">
+					<div class="col-sm-3">
 						<div class="form-group">
 							<label>Espécie</label>
-							<p class="layout-cabecalho--consulta" th:text="${consulta.animal.especie}"></p>
+							<p class="layout-cabecalho--consulta text-primary" th:text="${consulta.animal.especie}"></p>
 						</div>
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="form-row">
 
 					<div class="col-sm-6">
 						<div class="form-group">
@@ -114,8 +114,17 @@
 					</div>
 					
 				</div>
-				<div class="form-group">
-					<button class="btn  btn-primary" type="submit">Salvar</button>
+				<div class="container">
+					<div class="form-row justify-content-between">
+						
+						<button class="btn btn-primary btn-sm col-sm-2" type="submit" title="Salvar">
+							<i class="far fa-save"></i> Salvar
+						</button>
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
+							th:href="@{/atendimento/consultas}" th:title="'Cancelar operação'"> 
+							<i class="far fa-window-close"></i> Cancelar
+						</a>
+					</div>
 				</div>
 			</form>
 		</div>

@@ -6,7 +6,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	layout:decorate="~{layout/layout}">
 <head>
-	<script th:src="@{/javascripts/jquery.mask.min.js}"></script>
+	<script th:src="@{/js/jquery.mask.min.js}"></script>
 	<script th:src="@{/js/mascaras.js}"></script>
 </head>
 
@@ -14,12 +14,12 @@
 	<section layout:fragment="content">
 		<div class="layout-pagina">
 
-			<h1 class="titulo-formulario"><i class="fas fa-paw"></i>&nbsp;Cadastro de produtos para o fornecedor: 
-				<span class="nomeDestaque" th:text="${produto.fornecedor.nome}"></span>
+			<h1 class="titulo-formulario"><i class="fas fa-paw"></i>Cadastro de produtos para o fornecedor: 
+				<span class="text-primary" th:text="${produto.fornecedor.nome}"></span>
 			</h1>
 
 
-			<form method="POST" class="form-vertical  js-form-loading"
+			<form method="POST" class="form-vertical js-form-loading"
 				th:object="${produto}" th:action="@{/fornecedores/produtos/salvar}">
 				<div class="alert  alert-danger  alert-dismissible" role="alert"
 					th:if="${#fields.hasAnyErrors()}">
@@ -43,18 +43,18 @@
 				<input type="hidden" th:field="*{id}" />
 				<input type="hidden" th:field="*{fornecedor}" />
 
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-6">
 						<div class="form-group">
-							<label for="descricao">Descrição<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="descricao">Descrição</label>
 							<input id="descricao" type="text" class="form-control" th:field="*{descricao}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="tipo">Tipo<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="tipo">Tipo</label>
 							<select	id="tipo" class="form-control" th:field="*{tipo}">
 									<option value="">Selecione o tipo</option>
 									<option value="Acessorio">Acessório</option>
@@ -68,14 +68,14 @@
 					
 					<div class="col-sm-1">
 						<div class="form-group">
-							<label for="qtd">Qtd<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="qtd">Qtd</label>
 							<input id="qtd" type="text"	class="form-control sonumeros" th:field="*{qtd}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="unidademedida">Unidade de medida<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="unidademedida">Unidade de medida</label>
 							<select	id="unidademedida" class="form-control" th:field="*{unidadeMedida}">
 									<option value="">Selecione o unidade</option>
 									<option value="Ampola">Ampola</option>
@@ -98,18 +98,18 @@
 					</div>
 				</div>
 				<!-- /.row -->
-				<div class="row">
+				<div class="form-row">
 					
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="valorcompra">Valor compra<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="valorcompra">Valor compra</label>
 							<input id="valorcompra" type="text" class="form-control dinheiro" th:field="*{valorCompra}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="valorvenda">Valor venda<span class="obrigatorio"> *</span></label>
+							<label class="campo_obrigatorio" for="valorvenda">Valor venda</label>
 							<input id="valorvenda" type="text" class="form-control dinheiro" th:field="*{valorVenda}" />
 						</div>
 					</div>
@@ -130,9 +130,18 @@
 					
 				</div>
 
-				<div class="form-group">
-					<button class="btn  btn-primary" type="submit">Salvar</button>
+				<div class="container">
+				<div class="form-row justify-content-between">
+					<button class="btn btn-primary btn-sm col-sm-2" type="submit"
+						title="Salvar">
+						<i class="far fa-save"></i> Salvar
+					</button>
+					<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
+						th:href="@{/fornecedores/produtos/selecao/{id}(id=${produto.fornecedor.id})}" th:title="'Cancelar operação'"> <i
+						class="far fa-window-close"></i> Cancelar
+					</a>
 				</div>
+			</div>
 			</form>
 
 		</div>

@@ -41,20 +41,20 @@
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="row">
+				<div class="form-row">
 
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label for="descricao">Descrição<span class="obrigatorio">
-									*</span></label> <input id="descricao" type="text" class="form-control"
+							<label class="campo_obrigatorio" for="descricao">Descrição</label>
+								<input id="descricao" type="text" class="form-control"
 								th:field="*{descricao}" />
 						</div>
 					</div>
 
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="grupo">Grupo<span class="obrigatorio">
-									*</span></label> <select id="grupo" class="form-control">
+							<label class="campo_obrigatorio" for="grupo">Grupo</label>
+							<select id="grupo" class="form-control">
 								<option value="">Ex Consulta</option>
 								<option value="">Ex Cirurgia</option>
 								<option value="">Escolher</option>
@@ -63,25 +63,25 @@
 					</div>
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="custo">Custo (R$)<span class="obrigatorio">
-									*</span></label> <input id="custo" type="text" name="" class="form-control dinheiro">
+							<label class="campo_obrigatorio" for="custo">Custo (R$)</label>
+							<input id="custo" type="text" name="" class="form-control dinheiro">
 						</div>
 					</div>
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="margen">Margem %<span class="obrigatorio">
-									*</span></label> <input id="margen" type="text" name="" class="form-control porcentagem">
+							<label class="campo_obrigatorio" for="margen">Margem %</label>
+							<input id="margen" type="text" name="" class="form-control porcentagem">
 						</div>
 					</div>
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="venda">Venda (R$)<span class="obrigatorio">
-									*</span></label> <input id="venda" type="text" name="" class="form-control dinheiro">
+							<label class="campo_obrigatorio" for="venda">Venda (R$)</label>
+							<input id="venda" type="text" name="" class="form-control dinheiro">
 						</div>
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="form-row">
 					<label class="col-form-label col-sm-1 pt-0">Comissão:</label>
 					<div class="col-sm-1">
 						<div class="form-check">
@@ -137,13 +137,12 @@
 				</div>
 
 				<div class="container">
-					<div class="row justify-content-between">
-
-						<button class="btn  btn-primary btn-sm col-sm-1 " type="submit"
+					<div class="form-row justify-content-between">
+						<button class="btn  btn-primary btn-sm col-sm-2" type="submit"
 							title="Salvar">
 							<i class="far fa-save"></i> Salvar
 						</button>
-						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-1"
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
 							th:href="@{/atendimento/clientes}" th:title="'Cancelar operação'">
 							<i class="far fa-window-close"></i> Cancelar
 						</a>
