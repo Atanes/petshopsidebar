@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+</head>
+
+<body>
+
+	<section class="aw-layout-content js-content layout-pagina"
+		layout:fragment="content">
+
+		<h1 class="titulo-formulario">
+			<i class="fas fa-list"></i>Fornecedores
+		</h1>
+
+		<div class="alert  alert-success"
+			th:if="${!#strings.isEmpty(mensagem)}">
+			<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+				sucesso!</span>
+		</div>
+		<div class="form-row">
+			<div class="pesquisa">
+				<form method="GET" class="form-inline" action="/fornecedores"
+					th:object="${filtro}">
+					<div class="input-group">
+						<input class="form-control"
+							placeholder="Qual fornecedor você está procurando?"
+							autofocus="autofocus" th:field="*{nome}">
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-default">
+								<i class="fas fa-search"></i>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="table-responsive-sm col-sm-12">
+				<table id="tabela-produtos"
+					class="table table-sm table-striped table-bordered table-hover table-sm js-sticky-table">
+					<thead>
+						<tr>
+							<th scope="col">CNPJ - Nome</th>
+							<th scope="col">Contato</th>
+							<th scope="col">E-mail</th>
+							<th scope="col" class="text-center">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="fornecedor: ${fornecedores}">
+							<td th:text="${fornecedor.cnpj} + ' - ' + ${fornecedor.nome}">fornecedor1</td>
+							<td
+								th:text="${fornecedor.contato} + ', ' + ${fornecedor.telefone}">123</td>
+							<td th:text="${fornecedor.email}">123</td>
+							<td class="text-center">
+								<form method="POST"
+									th:onsubmit="'return confirm(\'Posso remover o fornecedor: ' + 
+								${fornecedor.nome} + ' da base de dados?\');'"
+									th:action="@{/fornecedores/excluir/{id}(id=${fornecedor.id})}">
+									<a class="btn btn-primary btn-sm"
+										th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}"
+										th:title="Editar"> <span class="fas fa-pencil-alt"></span>
+									</a> <a class="btn btn-success btn-sm"
+										th:href="@{/fornecedores/produtos/selecao/{id}(id=${fornecedor.id})}"
+										th:title="Produtos"> <span class="fas fa-dolly"></span>
+									</a> <input type="hidden" name="_method" value="DELETE" />
+									<button type="submit" class="btn btn-danger btn-sm"
+										title="Excluir">
+										<i class="far fa-trash-alt"></i>
+									</button>
+								</form>
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="4" th:if="${fornecedores.empty}">Nenhum
+								fornecedor cadastrado!!!</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

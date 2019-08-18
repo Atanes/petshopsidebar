@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+	<title>Cadastro de Serviçs</title>
+	<script th:src="@{/javascripts/jquery.mask.min.js}"></script>
+	<script th:src="@{/js/mascaras.js}"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="layout-pagina">
+
+			<h1 class="titulo-formulario">
+				<i class="fa fa-cart-arrow-down"></i>Cadastro de Serviço
+			</h1>
+
+			<form name="formulario" method="POST"
+				class="form-vertical  js-form-loading" th:object="${servico}"
+				th:action="@{/atendimento/servicos/salvar}">
+
+				<div class="alert  alert-danger  alert-dismissible" role="alert"
+					th:if="${#fields.hasAnyErrors()}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					<div th:each="erro: ${#fields.detailedErrors()}">
+						<i class="fa fa-exclamation-circle"></i> <span
+							th:text="${erro.message}">Mensagem erro.</span>
+					</div>
+				</div>
+
+				<div class="alert  alert-success"
+					th:if="${!#strings.isEmpty(mensagem)}">
+					<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+						sucesso!</span>
+				</div>
+
+				<input type="hidden" th:field="*{id}" />
+
+				<div class="form-row">
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="campo_obrigatorio" for="descricao">Descrição</label>
+								<input id="descricao" type="text" class="form-control"
+								th:field="*{descricao}" />
+						</div>
+					</div>
+
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="campo_obrigatorio" for="grupo">Grupo</label>
+							<select id="grupo" class="form-control">
+								<option value="">Ex Consulta</option>
+								<option value="">Ex Cirurgia</option>
+								<option value="">Escolher</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="campo_obrigatorio" for="custo">Custo (R$)</label>
+							<input id="custo" type="text" name="" class="form-control dinheiro">
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="campo_obrigatorio" for="margen">Margem %</label>
+							<input id="margen" type="text" name="" class="form-control porcentagem">
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="campo_obrigatorio" for="venda">Venda (R$)</label>
+							<input id="venda" type="text" name="" class="form-control dinheiro">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<label class="col-form-label col-sm-1 pt-0">Comissão:</label>
+					<div class="col-sm-1">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox"
+								name="gridPorcentagem" id="gridPorcentagem" value="opcao1">
+							<label class="form-check-label" for="gridPorcentagem">&nbsp;%</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="gridReal"
+								id="gridReal" value="opcao2"> <label
+								class="form-check-label" for="gridReal">&nbsp;R$</label>
+						</div>
+					</div>
+					<label class="col-form-label col-sm-1 pt-0">Vr Comissão:</label>
+					<div class="col-sm-2">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="gridLucro"
+								id="gridLucro" value="opcao1"> <label
+								class="form-check-label" for="gridLucro">&nbsp;Lucro</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="gridBruto"
+								id="gridBruto" value="opcao2"> <label
+								class="form-check-label" for="gridBruto">&nbsp;Vr Bruto</label>
+						</div>
+					</div>
+					<label class="col-form-label col-sm-2 pt-0">Comissão Sobre:</label>
+					<div class="col-sm-2">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="gridLucro"
+								id="gridLucro" value="opcao1"> <label
+								class="form-check-label" for="gridLucro">&nbsp;Lucro</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="gridBruto"
+								id="gridBruto" value="opcao2"> <label
+								class="form-check-label" for="gridBruto">&nbsp;Vr Bruto</label>
+						</div>
+					</div>
+					<label class="col-form-label col-sm-1 pt-0">Status</label>
+					<div class="col-sm-1">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="gridAtivo"
+								id="gridAtivo" value="opcao1"> <label
+								class="form-check-label" for="gridAtivo">&nbsp;Ativo</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox"
+								name="gridInativo" id="gridInativo" value="opcao2"> <label
+								class="form-check-label" for="gridInativo">&nbsp;Inativo</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="container">
+					<div class="form-row justify-content-between">
+						<button class="btn  btn-primary btn-sm col-sm-2" type="submit"
+							title="Salvar">
+							<i class="far fa-save"></i> Salvar
+						</button>
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
+							th:href="@{/atendimento/clientes}" th:title="'Cancelar operação'">
+							<i class="far fa-window-close"></i> Cancelar
+						</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+</head>
+
+<body>
+	<section class="aw-layout-content js-content layout-pagina" layout:fragment="content">	
+		
+			<h1 class="titulo-formulario"><i class="fas fa-notes-medical"></i>
+				Cadastro de consulta para o animal: <span class="text-primary" th:text="${consulta.animal.nome}"></span>
+			</h1>
+
+			<form name="formulario" method="POST" class="form-vertical  js-form-loading"
+				th:object="${consulta}" th:action="@{/atendimento/consultas/agendar}">
+				
+				<div class="alert  alert-danger  alert-dismissible" role="alert"
+					th:if="${#fields.hasAnyErrors()}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					<div th:each="erro: ${#fields.detailedErrors()}">
+						<i class="fa fa-exclamation-circle"></i> <span
+							th:text="${erro.message}">Mensagem erro.</span>
+					</div>
+				</div>
+
+				<div class="alert  alert-success"
+					th:if="${!#strings.isEmpty(mensagem)}">
+					<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+						sucesso!</span>
+				</div>
+    			
+				<input type="hidden" th:field="*{codigo}" />
+				<input type="hidden" th:field="*{animal}" />
+
+				<div class="form-row">
+				
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="status">Tipo</label> <select id="tipo"
+								class="form-control" th:field="*{tipo}">
+								<option th:each="tipos: ${TipoConsulta}" th:value="${tipos}"
+									th:text="${tipos.descricao}">Opção 1</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="data_atendimento">Data da Consulta</label> <input
+								id="data_atendimento" type="date" class="form-control"
+								th:field="*{dataAtendimento}" />
+						</div>
+					</div>
+					
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="cboveterinario">Veterinário</label> <select id="cboveterinario"
+								class="form-control" th:field="*{usuario}">
+								<option value="">Selecione o Veterinário</option>
+								<option th:each="veterinario: ${usuarios}" th:value="${veterinario.id}"
+									th:text="${veterinario.nome}">Opção 1</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="cbostatus">Status</label> <select
+								id="cbostatus" class="form-control" style="width: 100%;"
+								th:field="*{status}">
+								<option th:each="status: ${StatusConsulta}" th:value="${status}"
+									th:text="${status.descricao}">Opção 1</option>		
+							</select>
+						</div>
+					</div>
+					
+				</div>
+				<div class="container">
+					<div class="form-row justify-content-between">
+						
+						<button class="btn btn-primary btn-sm col-sm-2" type="submit" title="Salvar">
+							<i class="far fa-save"></i> Salvar
+						</button>
+						<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
+							th:href="@{/atendimento/consultas}" th:title="'Cancelar operação'"> 
+							<i class="far fa-window-close"></i> Cancelar
+						</a>
+					</div>
+				</div>
+			</form>
+	</section>
+</body>
+</html>

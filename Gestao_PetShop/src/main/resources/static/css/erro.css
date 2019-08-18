@@ -1,0 +1,46 @@
+html {
+	font-size: 62.5%;
+}
+
+body {
+	margin: 0;
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.4rem;
+}
+
+.container {
+    position: relative;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.center {
+  position: absolute;
+  left: 25%;
+  top: 50%;
+  width: 50%;
+  text-align: center;
+}
+
+.imagemcentral {
+	width: 100%;
+	position: absolute;
+  	left: 0px;
+  	top: 0px;
+  	z-index: -1;
+}
+
+.textoErro {
+	color: #42459C;
+	font-size: 1.5rem;
+}
+
+@media(min-width: 749px) {
+  .textoErro {
+	color: #42459C;
+	font-size: 2.5rem;
+}
+}
+
+

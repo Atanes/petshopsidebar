@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+	<script th:src="@{/webjars/jquery.inputmask/4.0.5/jquery.inputmask.bundle.js}"></script>
+	<script th:src="@{/js/iridiumit.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		
+			mostraCampo();
+	
+		});
+	</script>
+	<script type="text/javascript">
+		function mostraCampo(){
+			if(!document.getElementById("pedigree").checked){
+				document.getElementById("divpedigree").style.display = "none";
+			}else{
+				document.getElementById("divpedigree").style.display = "initial";
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<section class="aw-layout-content js-content layout-pagina"
+		layout:fragment="content">
+
+		<h1 class="titulo-formulario">
+			<i class="fas fa-paw"></i>Cadastro de animais do(a) cliente: <span
+				class="text-primary" th:text="${animal.cliente.nome}"></span>
+		</h1>
+
+		<form method="POST" class="form-vertical  js-form-loading"
+			th:object="${animal}" th:action="@{/clientes/animais/salvar}">
+
+			<div class="alert  alert-danger  alert-dismissible" role="alert"
+				th:if="${#fields.hasAnyErrors()}">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+
+				<div th:each="erro: ${#fields.detailedErrors()}">
+					<i class="fa fa-exclamation-circle"></i> <span
+						th:text="${erro.message}">Mensagem erro.</span>
+				</div>
+			</div>
+
+			<div class="alert  alert-success"
+				th:if="${!#strings.isEmpty(mensagem)}">
+				<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+					sucesso!</span>
+			</div>
+
+			<input type="hidden" th:field="*{id}" /> <input type="hidden"
+				th:field="*{cliente}" /> <input type="hidden" id="resp_cadastro"
+				name="resp_cadastro" th:value="${#authentication.principal.nome}" />
+
+			<div class="form-row">
+
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="nome">Nome</label> <input
+							id="nome" type="text" class="form-control" th:field="*{nome}" />
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<label class="campo_obrigatorio" for="sexo">Sexo</label> <select
+						id="sexo" class="form-control" th:field="*{sexo}">
+						<option value="">Selecione o sexo</option>
+						<option value="Femea">Fêmea</option>
+						<option value="Macho">Macho</option>
+					</select>
+				</div>
+
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="data_nasc">Data de
+							nascimento</label> <input id="data_nasc" type="date" class="form-control"
+							th:field="*{data_nasc}" />
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label for="microship">Microship</label> <input id="microship"
+							type="text" class="form-control" th:field="*{microship}" />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="form-row">
+
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="especie">Espécie</label> <select
+							id="especie" class="form-control" th:field="*{especie}"
+							onchange="filtraRaca()">
+							<option value="">Selecione a espécie</option>
+							<option value="Anfíbios">Anfíbio</option>
+							<option value="Aves">Ave</option>
+							<option value="Canino">Canino</option>
+							<option value="Equino">Equino</option>
+							<option value="Felino">Felino</option>
+							<option value="Mamíferos">Mamífero</option>
+							<option value="Peixe">Peixe</option>
+							<option value="Repteis">Réptel</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label class="campo_obrigatorio" for="raca">Raça</label> <select
+							id="raca" class="form-control" th:field="*{raca}">
+							<option th:each="raca: ${racas}" th:value="${raca.nome}"
+								th:text="${raca.nome}">Opção 1</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="observacoes">Observações</label> <input
+							id="observacoes" type="text" class="form-control"
+							th:field="*{observacoes}" />
+					</div>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-sm-2">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="castrado"
+							th:field="*{castrado}"> <label class="form-check-label"
+							for="castrado"> Castrado </label>
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="pedigree"
+							th:field="*{pedigree}" onchange="mostraCampo(this)"> <label
+							class="form-check-label" for="pedigree"> Pedigree </label>
+					</div>
+				</div>
+
+				<div id="divpedigree" class="col-sm-2">
+					<div class="form-group">
+						<label for="nrpedigree">Nº Pedigree</label> <input id="nrpedigree"
+							type="text" class="form-control" />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="container">
+				<div class="form-row justify-content-between">
+					<button class="btn btn-primary btn-sm col-sm-2" type="submit"
+						title="Salvar">
+						<i class="far fa-save"></i> Salvar
+					</button>
+					<a id="btncancelar" class="btn btn-warning btn-sm col-sm-2"
+						th:href="@{/atendimento/clientes/selecao/{id}(id=${animal.cliente.id})}"
+						th:title="'Cancelar operação'"> <i class="far fa-window-close"></i>
+						Cancelar
+					</a>
+				</div>
+			</div>
+
+		</form>
+	</section>
+</body>
+</html>

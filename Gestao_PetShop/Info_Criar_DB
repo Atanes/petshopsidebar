@@ -1,0 +1,164 @@
+#---SQL para criar as tabelas do banco de dados---#
+
+CREATE TABLE `animal` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `data_nasc` date DEFAULT NULL,
+  `especie` varchar(255) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `pedigree` varchar(255) DEFAULT NULL,
+  `raca` varchar(255) DEFAULT NULL,
+  `cliente_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK7p41093e3kpqckn9o6bosc98r` (`cliente_id`),
+  CONSTRAINT `FK7p41093e3kpqckn9o6bosc98r` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `cliente` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `celular` varchar(255) NOT NULL,
+  `cpf` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `telefone` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `colaborador` (
+  `matricula` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cpf` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `funcao` varchar(255) DEFAULT NULL,
+  `nome` varchar(255) NOT NULL,
+  PRIMARY KEY (`matricula`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `fornecedor` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `celular` varchar(255) NOT NULL,
+  `cnpj` varchar(255) NOT NULL,
+  `contato` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `telefone` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `permissao` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+
+CREATE TABLE `produto` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(255) NOT NULL,
+  `qtd` float NOT NULL,
+  `tipo` varchar(255) NOT NULL,
+  `unidade_medida` varchar(255) NOT NULL,
+  `valor_compra` double NOT NULL,
+  `valor_venda` double NOT NULL,
+  `fornecedor_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKo6c1dbi17sempey5dpnx6ovrj` (`fornecedor_id`),
+  CONSTRAINT `FKo6c1dbi17sempey5dpnx6ovrj` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedor` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `usuario` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ativo` bit(1) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `login` varchar(20) DEFAULT NULL,
+  `nome` varchar(255) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8
+
+CREATE TABLE `usuario_permissao` (
+  `usuario_id` bigint(20) NOT NULL,
+  `permissao_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`usuario_id`,`permissao_id`),
+  KEY `FKtcuagcmypmug2ddh2d5uol8s5` (`permissao_id`),
+  CONSTRAINT `FK5wc2vh351r26qbqt1tc52sh4m` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`),
+  CONSTRAINT `FKtcuagcmypmug2ddh2d5uol8s5` FOREIGN KEY (`permissao_id`) REFERENCES `permissao` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `grupo` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `un_grupo_nome` (`nome`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+SELECT * FROM petshopbd.grupo;
+
+CREATE TABLE `usuario_grupo` (
+  `usuario_id` bigint(20) NOT NULL,
+  `grupo_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`usuario_id`,`grupo_id`),
+  KEY `fk_usuariogrupo_grupo` (`grupo_id`),
+  CONSTRAINT `fk_usuariogrupo_grupo` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
+  CONSTRAINT `fk_usuariogrupo_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `grupo_permissao` (
+  `grupo_id` bigint(20) NOT NULL,
+  `permissao_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`grupo_id`,`permissao_id`),
+  KEY `fk_grupopermissao_permissao` (`permissao_id`),
+  CONSTRAINT `fk_grupopermissao_grupo` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
+  CONSTRAINT `fk_grupopermissao_permissao` FOREIGN KEY (`permissao_id`) REFERENCES `permissao` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+SELECT * FROM petshopbd.grupo_permissao;
+
+
+#---SQL para inserir aluns usuários no banco de dados---#
+
+insert into permissao (id, nome) values 
+	(1, 'ROLE_PS_ADMIN')
+	, (2, 'ROLE_PS_VETERINARIO')
+	, (3, 'ROLE_PS_CAIXA')
+	, (4, 'ROLE_PS_ATENDIMENTO')
+    ;
+	
+insert into usuario (id, ativo, cpf, email, login, nome, senha, telefone1, endereco_id) values 
+	(1, true,'086.060.808-02', 'aatanes100@gmail.com', 'Atanes', 'Atanes', '$2a$10$JvyF9q/k/eYwXTVjc4Ay0OT/dCwjW14eT88q3e587jaENTvtt30s2', '(11) 4312-1212',1)
+	, (2, true,'086.060.808-04', 'alexandre@a2d.com.br', 'Alexandre', 'Alexandre', '$2a$10$JvyF9q/k/eYwXTVjc4Ay0OT/dCwjW14eT88q3e587jaENTvtt30s2', '(11) 4312-1212',2)
+	, (3, true,'086.060.808-03', 'daniel@a2d.com.br','Daniel', 'Daniel', '$2a$10$JvyF9q/k/eYwXTVjc4Ay0OT/dCwjW14eT88q3e587jaENTvtt30s2', '(11) 4312-1212',3)
+	, (4, true,'086.060.808-01','veterinario@teste.com', 'Veterinario', 'Veterinario', '$2a$10$JvyF9q/k/eYwXTVjc4Ay0OT/dCwjW14eT88q3e587jaENTvtt30s2', '(11) 4312-1212',4)
+	, (5, true,'086.060.808-07', 'caixa@teste.com', 'Caixa', 'Caixa', '$2a$10$JvyF9q/k/eYwXTVjc4Ay0OT/dCwjW14eT88q3e587jaENTvtt30s2', '(11) 4312-1212',5)
+	, (6, true,'086.060.808-09', 'atendimento@teste.com','Atendimento', 'Atendimento', '$2a$10$JvyF9q/k/eYwXTVjc4Ay0OT/dCwjW14eT88q3e587jaENTvtt30s2', '(11) 4312-1212',6)
+;
+	
+insert into usuario_permissao (usuario_id, permissao_id) values 
+	(1, 1)
+	, (2, 1)
+	, (3, 1)
+	, (4, 2)
+	, (5, 3)
+	, (6, 4)
+;
+
+# ------ PostGreSQL -------#
+CREATE TABLE grupo (
+  id bigint NOT NULL,
+  nome varchar(100) NOT NULL,
+  PRIMARY KEY (id, nome)
+)
+
+CREATE SEQUENCE grupo_id
+START 1
+INCREMENT 1
+MINVALUE 1
+OWNED BY grupo.id;
+
+CREATE TABLE grupo_permissao (
+  grupo_id bigint NOT NULL,
+  permissao_id bigint NOT NULL,
+  PRIMARY KEY (grupo_id,permissao_id)
+)
+
+CREATE TABLE usuario_grupo (
+  usuario_id bigint NOT NULL,
+  grupo_id bigint NOT NULL,
+  PRIMARY KEY (usuario_id,grupo_id)
+)

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+
+	<script th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.14.3/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+	
+</head>
+	
+<body>
+	<section th:fragment="menu">
+		<div class="col-md-2 float-left col-1 pl-0 pr-0 collapse width"	id="sidebar">
+				<div class="list-group border-0 card text-center text-md-left">
+					<a href="#perfil" class="list-group-item d-inline-block collapsed" data-toggle="collapse" 
+						data-parent="#sidebar" aria-expanded="false" aria-label="Toggle navigation">
+						<img class="inset" src="http://rs775.pbsrc.com/albums/yy35/PhoenyxStar/link-1.jpg~c200">
+							&nbsp;<span	class="d-none d-md-inline" th:text="${#authentication.principal.nome}"></span>
+						<i class="fas fa-caret-right"></i>
+	    				<i class="fas fa-caret-down"></i>
+                	</a>
+                	<div class="collapse" id="perfil">
+						<a href="#meusdados" class="list-group-item">
+							<i class="fas fa-user-edit"></i>
+							<span class="d-none d-md-inline">Meus dados</span>
+    					</a>
+    					<div class="list-group-item">
+	    					<form action="/logout" method="post">
+								<button class="btn btn-link" type="submit">
+									<i class="fas fa-sign-out-alt"></i>Sair
+								</button>
+								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+							</form>
+						</div>
+    				</div>
+					<a href="#menu1" class="list-group-item d-inline-block collapsed"
+						data-toggle="collapse" data-parent="#sidebar"
+						aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-chart-line"></i>
+							<span class="d-none d-md-inline">Dashboard
+								<i class="fas fa-caret-right"></i>
+	    						<i class="fas fa-caret-down"></i>
+	    					</span>
+    				</a>
+					<div class="collapse" id="menu1">
+						<a href="#menu1sub1" class="list-group-item"
+							data-toggle="collapse" aria-expanded="false">Subitem 1
+							<i class="fas fa-caret-right"></i>
+    						<i class="fas fa-caret-down"></i>
+    					</a>
+						<div class="collapse" id="menu1sub1">
+							<a href="/" class="list-group-item" data-parent="#menu1sub1">
+								Subitem	1 a
+							</a>
+							<a href="#" class="list-group-item" data-parent="#menu1sub1">Subitem
+								2 b</a> <a href="#menu1sub1sub1" class="list-group-item"
+								data-toggle="collapse" aria-expanded="false">Subitem 3 c </a>
+							<div class="collapse" id="menu1sub1sub1">
+								<a href="#" class="list-group-item" data-parent="#menu1sub1sub1">Subitem
+									3 c.1</a> <a href="#" class="list-group-item"
+									data-parent="#menu1sub1sub1">Subitem 3 c.2</a>
+							</div>
+							<a href="#" class="list-group-item" data-parent="#menu1sub1">Subitem
+								4 d</a> <a href="#menu1sub1sub2" class="list-group-item"
+								data-toggle="collapse" aria-expanded="false">Subitem 5 e </a>
+							<div class="collapse" id="menu1sub1sub2">
+								<a href="#" class="list-group-item" data-parent="#menu1sub1sub2">Subitem
+									5 e.1</a> <a href="#" class="list-group-item"
+									data-parent="#menu1sub1sub2">Subitem 5 e.2</a>
+							</div>
+						</div>
+						<a href="#" class="list-group-item" data-parent="#menu1">Subitem
+							2</a> <a href="#" class="list-group-item" data-parent="#menu1">Subitem
+							3</a>
+					</div>
+					
+					<a href="#cadastro" class="list-group-item d-inline-block collapsed"
+						data-toggle="collapse" data-parent="#sidebar"
+						aria-expanded="false" aria-label="Toggle navigation"><i class="far fa-plus-square"></i>
+							<span	class="d-none d-md-inline">Cadastros
+								<i class="fas fa-caret-right"></i>
+	    						<i class="fas fa-caret-down"></i>
+	    					</span>
+    				</a>
+					<div class="collapse" id="cadastro">
+						<a href="/administracao/usuarios/novo" class="list-group-item" data-parent="#cadastro" sec:authorize="hasRole('PS_ADMIN')">
+							<i class="fas fa-user-plus"></i>
+							<span class="d-none d-md-inline">Usuário</span>
+    					</a>
+						<a href="/fornecedores/novo" class="list-group-item">
+							<i class="fas fa-industry"></i>
+							<span class="d-none d-md-inline">Fornecedor</span>
+    					</a>
+						<a href="/atendimento/clientes/novo" class="list-group-item" sec:authorize="hasRole('PS_ATENDIMENTO') or hasRole('PS_ADMIN')">
+							<i class="fas fa-user-plus"></i>
+							<span class="d-none d-md-inline">Cliente</span>
+    					</a>
+					</div>
+					
+					<a href="#pesquisa" class="list-group-item d-inline-block collapsed"
+						data-toggle="collapse" data-parent="#sidebar"
+						aria-expanded="false" aria-label="Toggle navigation"><i class="far fa-list-alt"></i>
+							<span class="d-none d-md-inline">Pesquisas
+								<i class="fas fa-caret-right"></i>
+	    						<i class="fas fa-caret-down"></i>
+	    					</span>
+    				</a>
+					<div class="collapse" id="pesquisa">
+						<a href="/administracao/usuarios" class="list-group-item" sec:authorize="hasRole('PS_ADMIN')">
+							<i class="fas fa-users"></i>
+							<span class="d-none d-md-inline">Usuários</span>
+    					</a>
+    					<a href="/atendimento/clientes" class="list-group-item" sec:authorize="hasRole('PS_ATENDIMENTO') or hasRole('PS_ADMIN')">
+							<i class="far fa-handshake"></i>
+							<span class="d-none d-md-inline">Clientes</span>
+    					</a>
+						<a href="/atendimento/clientes/inativos" class="list-group-item" sec:authorize="hasRole('PS_ADMIN')">
+							<i class="fas fa-user-slash"></i>
+							<span class="d-none d-md-inline">Clientes Inativos</span>
+    					</a>
+    					<a href="/atendimento/consultas" class="list-group-item" sec:authorize="hasRole('PS_ADMIN')">
+							<i class="fas fa-notes-medical"></i>
+							<span class="d-none d-md-inline">Consultas</span>
+    					</a>
+						<a href="/fornecedores" class="list-group-item" sec:authorize="hasRole('PS_ADMIN')">
+							<i class="fas fa-clipboard"></i>
+							<span class="d-none d-md-inline">Fornecedores</span>
+    					</a>
+					</div>
+					
+
+					<a href="#" class="list-group-item d-inline-block collapsed"
+						data-parent="#sidebar"><i class="fa fa-heart"></i>
+						<span class="d-none d-md-inline">Item 2</span>
+					</a>
+					<a href="#"	class="list-group-item d-inline-block collapsed"
+						data-parent="#sidebar"><i class="fa fa-list"></i>
+						<span class="d-none d-md-inline">Item 3</span>
+					</a>
+					<a href="#"	class="list-group-item d-inline-block collapsed"
+						data-parent="#sidebar"><i class="fa fa-clock-o"></i>
+						<span class="d-none d-md-inline">Link</span>
+					</a>
+					<a href="#"	class="list-group-item d-inline-block collapsed"
+						data-parent="#sidebar"><i class="fa fa-th"></i>
+						<span class="d-none d-md-inline">Link</span>
+					</a>
+					<a href="#"	class="list-group-item d-inline-block collapsed"
+						data-parent="#sidebar"><i class="fa fa-gear"></i>
+						<span class="d-none d-md-inline">Link</span>
+					</a>
+					<a href="#"	class="list-group-item d-inline-block collapsed"
+						data-parent="#sidebar"><i class="fa fa-calendar"></i>
+						<span class="d-none d-md-inline">Link</span>
+					</a>
+				</div>
+		</div>
+	</section>
+</body>
+</html>

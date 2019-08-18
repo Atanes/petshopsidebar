@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+</head>
+
+<body>
+
+	<section layout:fragment="content">
+		<div class="layout-pagina">
+
+			<h1 class="titulo-formulario">
+				<i class="fas fa-user-slash"></i>Clientes inativos
+			</h1>
+			<div class="form-row col-sm-6">
+				<div class="pesquisa">
+					<form method="GET" class="form-inline"
+						action="/atendimento/clientes/inativos" th:object="${filtro}">
+						<div class="input-group">
+							<input class="form-control"
+								placeholder="Qual cliente você está procurando?"
+								autofocus="autofocus" th:field="*{nome}"></input>
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-default">
+									<i class="fas fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="table-responsive-sm col-sm-12">
+					<table id="tabela-produtos"
+						class="table table-sm table-striped table-bordered table-hover table-condensed js-sticky-table">
+						<thead>
+							<tr>
+								<th scope="col">Nome</th>
+								<th scope="col">CPF</th>
+								<th scope="col">Telefone</th>
+								<th scope="col">e-mail</th>
+								<th scope="col" class="text-center">Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="cliente: ${clientes}">
+								<td th:text="${cliente.nome}">123</td>
+								<td th:text="${cliente.cpf}">123</td>
+								<td th:text="${cliente.telefone1}">123</td>
+								<td th:text="${cliente.email}">123</td>
+								<td class="text-center"><a class="btn btn-warning btn-sm"
+									th:href="@{/atendimento/clientes/ativar/{id}(id=${cliente.id})}"
+									th:title="Re-Ativar"> <span class="fa fa-user-check"></span>
+								</a></td>
+							</tr>
+
+							<tr>
+								<td colspan="6" th:if="${clientes.empty}">Nenhum cliente
+									inativo cadastrado!!</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
