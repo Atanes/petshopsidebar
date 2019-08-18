@@ -5,23 +5,24 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	layout:decorate="~{layout/layout}">
 <head>
-	<title>Página principal</title>
+<title>Página principal</title>
 </head>
 <body>
 	<section layout:fragment="content">
 		<div class="container">
 			<div class="layout-pagina">
-				<div class="page-header">
-					<div>
-						<a th:href="@{http://www.petshop.com.br}"> <img
-							alt="Pet Shop Teste" th:src="@{/images/logoPetShop.png}" />
-						</a>
-					</div>
-					<h3>
-						<span sec:authentication="principal.nome"></span>, Bem vindo ao
-						sistema!
-					</h3>
+
+				<div>
+					<a th:href="@{http://www.petshop.com.br}">
+					<img class="img-fluid" alt="Pet Shop Logo"
+						th:src="@{/images/logoPetShop.png}" />
+					</a>
 				</div>
+				<h3>
+					<span sec:authentication="principal.nome"></span>, Bem vindo ao
+					sistema!
+				</h3>
+
 			</div>
 		</div>
 	</section>
