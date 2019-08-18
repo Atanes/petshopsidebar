@@ -18,18 +18,20 @@
 					<a href="#perfil" class="list-group-item d-inline-block collapsed" data-toggle="collapse" 
 						data-parent="#sidebar" aria-expanded="false" aria-label="Toggle navigation">
 						<img class="inset" src="http://rs775.pbsrc.com/albums/yy35/PhoenyxStar/link-1.jpg~c200">
-							&nbsp;<span	class="d-none d-md-inline" th:text="${#authentication.principal.nome}"></span>
-						<i class="fas fa-caret-right"></i>
-	    				<i class="fas fa-caret-down"></i>
+							<span	class="d-none d-md-inline"> 
+								<span th:text="${#authentication.principal.nome}"></span>
+								<i class="fas fa-caret-right"></i>
+	    						<i class="fas fa-caret-down"></i>
+	    					</span>
                 	</a>
                 	<div class="collapse" id="perfil">
-						<a href="#meusdados" class="list-group-item">
+						<a href="#meusdados" class="list-group-item" title="Meus dados">
 							<i class="fas fa-user-edit"></i>
 							<span class="d-none d-md-inline">Meus dados</span>
     					</a>
     					<div class="list-group-item">
 	    					<form action="/logout" method="post">
-								<button class="btn btn-link" type="submit">
+								<button class="btn btn-link" type="submit" title="Sair">
 									<i class="fas fa-sign-out-alt"></i>Sair
 								</button>
 								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -89,7 +91,7 @@
 							<i class="fas fa-user-plus"></i>
 							<span class="d-none d-md-inline">Usuário</span>
     					</a>
-						<a href="/fornecedores/novo" class="list-group-item">
+						<a href="/fornecedores/novo" class="list-group-item" sec:authorize="hasRole('PS_ADMIN')">
 							<i class="fas fa-industry"></i>
 							<span class="d-none d-md-inline">Fornecedor</span>
     					</a>
@@ -97,6 +99,11 @@
 							<i class="fas fa-user-plus"></i>
 							<span class="d-none d-md-inline">Cliente</span>
     					</a>
+    					<a href="/atendimento/servicos/novo" class="list-group-item" sec:authorize="hasRole('PS_ATENDIMENTO') or hasRole('PS_ADMIN')">
+							<i class="fa fa-cart-arrow-down"></i>
+							<span class="d-none d-md-inline">Serviço</span>
+    					</a>
+    					
 					</div>
 					
 					<a href="#pesquisa" class="list-group-item d-inline-block collapsed"
@@ -120,7 +127,7 @@
 							<i class="fas fa-user-slash"></i>
 							<span class="d-none d-md-inline">Clientes Inativos</span>
     					</a>
-    					<a href="/atendimento/consultas" class="list-group-item" sec:authorize="hasRole('PS_ADMIN')">
+    					<a href="/atendimento/consultas" class="list-group-item" sec:authorize="hasRole('PS_ADMIN')or hasRole('PS_VETERINARIO')">
 							<i class="fas fa-notes-medical"></i>
 							<span class="d-none d-md-inline">Consultas</span>
     					</a>
