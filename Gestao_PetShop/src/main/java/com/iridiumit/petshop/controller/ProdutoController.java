@@ -34,14 +34,12 @@ public class ProdutoController {
 	@GetMapping
 	public ModelAndView listar(@ModelAttribute("filtro") ProdutoFiltro filtro) {
 		
-		String descricao = filtro.getDescricao() == null ? "%" : filtro.getDescricao();
-		
 		ModelAndView modelAndView = new ModelAndView("produtos/lista-produtos");
 		
 		if(filtro.getDescricao() == null) {
 			modelAndView.addObject("produtos", produtos.findAll());
 		}else {
-			modelAndView.addObject("produtos", produtos.findByDescricaoContainingIgnoreCase(descricao));
+			modelAndView.addObject("produtos", produtos.findByDescricaoContainingIgnoreCase(filtro.getDescricao()));
 		}
 		
 		return modelAndView;

@@ -41,10 +41,10 @@ public class Produto {
 	@NotNull (message = "{qtdproduto.not.null}")
 	private Float qtd;
 	
-	@NotEmpty (message = "{valorcompra.not.null}")
+	@NotNull (message = "{valorcompra.not.null}")
 	private Double valorCompra;
 	
-	@NotEmpty (message = "{valorvenda.not.null}")
+	@NotNull (message = "{valorvenda.not.null}")
 	private Double valorVenda;
 	
 	@Column(name="data_validade")
