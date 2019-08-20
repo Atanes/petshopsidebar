@@ -124,10 +124,10 @@
 							<td class="text-center" th:text="${produto.qtd}">qtd</td>
 
 							<td class="text-center"
-								th:text="${produto.convertValorToMoney(produto.valorCompra)}">valorcompra</td>
+								th:text="'R$ ' + ${produto.valorCompra}">valorcompra</td>
 
 							<td class="text-center"
-								th:text="${produto.convertValorToMoney(produto.valorVenda)}">valorvenda</td>
+								th:text="'R$ ' + ${produto.valorVenda}">valorvenda</td>
 
 							<td class="text-center" th:text="${produto.lote}">lote</td>
 

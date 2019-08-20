@@ -5,6 +5,8 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,11 +42,11 @@ public class Produto {
 	@NotNull (message = "{qtdproduto.not.null}")
 	private Float qtd;
 	
-	@NotNull (message = "{valorcompra.not.null}")
-	private Double valorCompra;
 	
-	@NotNull (message = "{valorvenda.not.null}")
-	private Double valorVenda;
+	private BigDecimal valorCompra;
+	
+
+	private BigDecimal valorVenda;
 	
 	@Column(name="data_validade")
 	@Temporal(TemporalType.DATE)
@@ -62,8 +64,8 @@ public class Produto {
 		
 	}
 	
-	public Produto(Long id, String descricao, String tipo, String unidadeMedida, Float qtd, Double valorCompra,
-			Double valorVenda, Date data_validade, String lote, Fornecedor fornecedor) {
+	public Produto(Long id, String descricao, String tipo, String unidadeMedida, Float qtd, BigDecimal valorCompra,
+			BigDecimal valorVenda, Date data_validade, String lote, Fornecedor fornecedor) {
 		this.id = id;
 		this.descricao = descricao;
 		this.tipo = tipo;
@@ -116,20 +118,20 @@ public class Produto {
 		this.qtd = qtd;
 	}
 
-	public Double getValorCompra() {
+	public BigDecimal getValorCompra() {
 		return valorCompra;
 	}
 
-	public void setValorCompra(String valorCompra) {
-		this.valorCompra = Double.valueOf(valorCompra.replace(",", "."));
+	public void setValorCompra(BigDecimal valorCompra) {
+		this.valorCompra = valorCompra;
 	}
 
-	public Double getValorVenda() {
+	public BigDecimal getValorVenda() {
 		return valorVenda;
 	}
 
-	public void setValorVenda(String valorVenda) {
-		this.valorVenda = Double.valueOf(valorVenda.replace(",", "."));;
+	public void setValorVenda(BigDecimal valorVenda) {
+		this.valorVenda = valorVenda;
 	}
 
 	public String convertValorToMoney(Double valor){

@@ -8,10 +8,21 @@
 <head>
 	<script th:src="@{/js/jquery.mask.min.js}"></script>
 	<script th:src="@{/js/mascaras.js}"></script>
+	<script th:src="@{/js/jquery.maskMoney.min.js}"></script>
 </head>
 
 <body>
 	<section layout:fragment="content">
+	
+	<script type="text/javascript">
+		$(function() {
+			var decimal = $('.js-decimal');
+			decimal.maskMoney();
+			
+			var plain = $('.js-plain');
+			plain.maskMoney({ precision: 0 });
+		});
+	</script>
 		<div class="layout-pagina">
 
 			<h1 class="titulo-formulario"><i class="fas fa-paw"></i>Cadastro de produtos para o fornecedor: 
@@ -103,21 +114,21 @@
 					<div class="col-sm-3">
 						<div class="form-group">
 							<label class="campo_obrigatorio" for="valorcompra">Valor compra</label>
-							<input id="valorcompra" type="text" class="form-control dinheiro" th:field="*{valorCompra}" />
+							<input id="valorcompra" type="text" class="form-control js-decimal" th:field="*{valorCompra}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
 						<div class="form-group">
 							<label class="campo_obrigatorio" for="valorvenda">Valor venda</label>
-							<input id="valorvenda" type="text" class="form-control dinheiro" th:field="*{valorVenda}" />
+							<input id="valorvenda" type="text" class="form-control js-decimal" th:field="*{valorVenda}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
 						<div class="form-group">
 							<label for="lote">Lote</label>
-							<input id="lote" type="text" class="form-control"	th:field="*{lote}" />
+							<input id="lote" type="text" class="form-control" th:field="*{lote}" />
 						</div>
 					</div>
 					
