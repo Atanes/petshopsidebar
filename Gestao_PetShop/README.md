@@ -9,4 +9,4 @@ https://petshopsidebar.herokuapp.com/entrar
 
 Usuário: Convidado
 
-Senha: convidado
+Senha: 123
