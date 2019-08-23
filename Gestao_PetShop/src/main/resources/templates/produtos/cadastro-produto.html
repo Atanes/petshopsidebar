@@ -15,13 +15,13 @@
 	<section layout:fragment="content">
 	
 	<script type="text/javascript">
-		$(function() {
-			var decimal = $('.js-decimal');
-			decimal.maskMoney();
-			
-			var plain = $('.js-plain');
-			plain.maskMoney({ precision: 0 });
-		});
+	$(function() {
+		var decimal = $('.js-decimal');
+		decimal.maskMoney({ decimal: ',', thousands: '.' });
+		
+		var plain = $('.js-plain');
+		plain.maskMoney({ precision: 0, thousands: '.' });
+	});
 	</script>
 		<div class="layout-pagina">
 

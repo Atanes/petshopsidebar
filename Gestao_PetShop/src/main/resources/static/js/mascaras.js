@@ -41,12 +41,8 @@ $(function() {
 	$('.placaCarro').mask('AAA-0000');
 	$('.horasMinutos').mask('00:00');
 	$('.cartaoCredito').mask('0000 0000 0000 0000');
-	$('.percent').mask('00,0%', {
-		reverse : true
-	});
-	$('.percent2').mask('00,0', {
-		reverse : true
-	});
+	$('.percent').mask('00,0%'. {clearifnotmatch: true}, {reverse: true});
+	$('.percent2').mask('00,0'. {clearifnotmatch: true}, {reverse: true});
 
 	$('.porcentagem').mask('P', {
 		translation : {

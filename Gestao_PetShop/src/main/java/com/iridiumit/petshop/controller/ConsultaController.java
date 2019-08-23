@@ -96,7 +96,7 @@ public class ConsultaController {
 		
 		consultas.save(consulta);
 
-		attributes.addFlashAttribute("mensagem", "Consulta agendada com sucesso!!");
+		attributes.addFlashAttribute("mensagem", "Consulta atualizada com sucesso!!");
 
 		return new ModelAndView("redirect:/atendimento/consultas");
 	}

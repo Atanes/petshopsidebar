@@ -14,11 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
 public class Produto {
@@ -40,9 +43,13 @@ public class Produto {
 	private Float qtd;
 	
 	@NotNull (message = "{valorcompra.not.null}")
+	@DecimalMin(value = "0.01", message = "Valor de compra minimo do produto não pode ser menor que R$ 0,01")
+	@NumberFormat(style = Style.NUMBER, pattern = "#,##0.00")
 	private BigDecimal valorCompra;
 	
 	@NotNull (message = "{valorvenda.not.null}")
+	@DecimalMin(value = "0.50", message = "Valor de venda minimo do produto não pode ser menor que R$ 0,50")
+	@NumberFormat(style = Style.NUMBER, pattern = "#,##0.00")
 	private BigDecimal valorVenda;
 	
 	@Column(name="data_validade")
