@@ -1,11 +1,8 @@
 package com.iridiumit.petshop.model;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,10 +39,10 @@ public class Produto {
 	@NotNull (message = "{qtdproduto.not.null}")
 	private Float qtd;
 	
-	
+	@NotNull (message = "{valorcompra.not.null}")
 	private BigDecimal valorCompra;
 	
-
+	@NotNull (message = "{valorvenda.not.null}")
 	private BigDecimal valorVenda;
 	
 	@Column(name="data_validade")
@@ -132,15 +129,6 @@ public class Produto {
 
 	public void setValorVenda(BigDecimal valorVenda) {
 		this.valorVenda = valorVenda;
-	}
-
-	public String convertValorToMoney(Double valor){
-		DecimalFormat df = new DecimalFormat("###,###.00");
-		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-		dfs.setDecimalSeparator(',');
-		dfs.setGroupingSeparator('.');
-		df.setDecimalFormatSymbols(dfs);
-		return "R$ " + df.format(valor);
 	}
 	
 	public Date getData_validade() {

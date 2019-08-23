@@ -16,11 +16,8 @@
 				<i class="fas fa-list"></i>Produtos
 			</h1>
 
-			<div class="alert alert-success"
-				th:if="${!#strings.isEmpty(mensagem)}">
-				<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
-					sucesso!</span>
-			</div>
+			<th:block th:insert="layout/fragments/MensagemGeral :: sucesso"></th:block>
+			
 			<div class="form-row">
 				<div class="pesquisa">
 					<form method="GET" class="form-inline"
@@ -62,10 +59,10 @@
 								<td class="text-center" th:text="${produto.qtd}">qtd</td>
 
 								<td class="text-right"
-									th:text="${produto.convertValorToMoney(produto.valorCompra)}">valorcompra</td>
+									th:text="${produto.valorCompra}">valorcompra</td>
 
 								<td class="text-right"
-									th:text="${produto.convertValorToMoney(produto.valorVenda)}">valorvenda</td>
+									th:text="${produto.valorVenda}">valorvenda</td>
 
 								<td th:text="${produto.fornecedor.nome}">fornecedor</td>
 
