@@ -18,7 +18,7 @@ import com.iridiumit.petshop.model.Fornecedor;
 import com.iridiumit.petshop.model.Produto;
 import com.iridiumit.petshop.repository.Fornecedores;
 import com.iridiumit.petshop.repository.Produtos;
-import com.iridiumit.petshop.repository.filtros.ProdutoFiltro;
+import com.iridiumit.petshop.repository.filtros.FiltroGeral;
 
 
 @Controller
@@ -32,21 +32,21 @@ public class ProdutoController {
 	private Produtos produtos;
 	
 	@GetMapping
-	public ModelAndView listar(@ModelAttribute("filtro") ProdutoFiltro filtro) {
+	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro) {
 		
-		ModelAndView modelAndView = new ModelAndView("produtos/lista-produtos");
+ModelAndView modelAndView = new ModelAndView("produtos/lista-produtos");
 		
-		if(filtro.getDescricao() == null) {
+		if(filtro.getTextoFiltro() == null) {
 			modelAndView.addObject("produtos", produtos.findAll());
 		}else {
-			modelAndView.addObject("produtos", produtos.findByDescricaoContainingIgnoreCase(filtro.getDescricao()));
+			modelAndView.addObject("produtos", produtos.findByDescricaoContainingIgnoreCase(filtro.getTextoFiltro()));
 		}
 		
 		return modelAndView;
 	}
 	
 	@GetMapping("/selecao/{id}")
-	public ModelAndView SelecaoPorFornecedor(@PathVariable Long id, @ModelAttribute("filtro") ProdutoFiltro filtro) {
+	public ModelAndView SelecaoPorFornecedor(@PathVariable Long id, @ModelAttribute("filtro") FiltroGeral filtro) {
 
 		Fornecedor f = fornecedores.getOne(id);
 
@@ -54,10 +54,10 @@ public class ProdutoController {
 
 		modelAndView.addObject(f);
 		
-		if(filtro.getDescricao() == null) {
+		if(filtro.getTextoFiltro() == null) {
 			modelAndView.addObject("produtos", produtos.findByFornecedor(f));
 		}else {
-			modelAndView.addObject("produtos", produtos.findByFornecedorAndDescricaoContainingIgnoreCase(f, filtro.getDescricao()));
+			modelAndView.addObject("produtos", produtos.findByFornecedorAndDescricaoContainingIgnoreCase(f, filtro.getTextoFiltro()));
 		}
 
 		return modelAndView;

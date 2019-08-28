@@ -1,7 +1,5 @@
 package com.iridiumit.petshop.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.iridiumit.petshop.model.Fornecedor;
 import com.iridiumit.petshop.repository.Fornecedores;
 import com.iridiumit.petshop.repository.Produtos;
-import com.iridiumit.petshop.repository.filtros.FornecedorFiltro;
+import com.iridiumit.petshop.repository.filtros.FiltroGeral;
 import com.iridiumit.petshop.service.FornecedorService;
 
 @Controller
@@ -36,13 +34,15 @@ public class FornecedorController {
 	private Produtos produtos;
 	
 	@GetMapping
-	public ModelAndView listar(@ModelAttribute("filtro") FornecedorFiltro filtro) {
+	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro) {
 		
 		ModelAndView modelAndView = new ModelAndView("fornecedores/lista-fornecedores");
 		
-		List<Fornecedor> fornecedores = fornecedorService.filtrar(filtro);
-
-		modelAndView.addObject("fornecedores", fornecedores);
+		if(filtro.getTextoFiltro() == null) {
+			modelAndView.addObject("fornecedores", fornecedores.findAll());
+		}else {
+			modelAndView.addObject("fornecedores", fornecedores.findByNomeContainingIgnoreCase(filtro.getTextoFiltro()));
+		}
 		
 		return modelAndView;
 	}

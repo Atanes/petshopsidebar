@@ -2,7 +2,6 @@ package com.iridiumit.petshop.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -27,8 +26,7 @@ import com.iridiumit.petshop.relatorios.ClienteREL;
 import com.iridiumit.petshop.repository.Animais;
 import com.iridiumit.petshop.repository.Clientes;
 import com.iridiumit.petshop.repository.Enderecos;
-import com.iridiumit.petshop.repository.filtros.AnimalFiltro;
-import com.iridiumit.petshop.repository.filtros.ClienteFiltro;
+import com.iridiumit.petshop.repository.filtros.FiltroGeral;
 import com.iridiumit.petshop.service.ClienteService;
 
 @Controller
@@ -48,23 +46,34 @@ public class ClienteController {
 	private Animais animais;
 
 	@GetMapping
-	public ModelAndView listar(@ModelAttribute("filtro") ClienteFiltro filtro) {
+	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro) {
 
-		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes");
+ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes");
 		
-		List<Cliente> clientes = clienteService.filtrar(filtro);
+		String nome = "";
+		
+		if(filtro.getTextoFiltro() == null) {
+			nome = "%";
+		}else {
+			nome = filtro.getTextoFiltro();
+		}
 
-		modelAndView.addObject("clientes", clientes);
-		
+		modelAndView.addObject("clientes", clientes.findByNomeContainingIgnoreCaseAndAtivo(nome, true));
 		return modelAndView;
 	}
 
 	@GetMapping("/inativos")
-	public ModelAndView listarInativos(@ModelAttribute("filtro") ClienteFiltro filtro) {
+	public ModelAndView listarInativos(@ModelAttribute("filtro") FiltroGeral filtro) {
 
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
-
-		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes-inativos");
+ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes-inativos");
+		
+		String nome = "";
+		
+		if(filtro.getTextoFiltro() == null) {
+			nome = "%";
+		}else {
+			nome = filtro.getTextoFiltro();
+		}
 
 		modelAndView.addObject("clientes", clientes.findByNomeContainingIgnoreCaseAndAtivo(nome, false));
 		return modelAndView;
@@ -89,7 +98,7 @@ public class ClienteController {
 	
 	  @GetMapping("/selecao/{id}") public ModelAndView
 	  SelecaoPorCliente(@PathVariable Long id, @ModelAttribute("filtro")
-	  AnimalFiltro filtro) {
+	  FiltroGeral filtro) {
 	  
 	  Cliente c = clientes.getOne(id);
 	  

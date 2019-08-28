@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.iridiumit.petshop.repository.filtros.FiltroGeral;
 import com.iridiumit.petshop.model.Animal;
 import com.iridiumit.petshop.model.Cliente;
 import com.iridiumit.petshop.model.Raca;
 import com.iridiumit.petshop.repository.Animais;
 import com.iridiumit.petshop.repository.Clientes;
 import com.iridiumit.petshop.repository.Racas;
-import com.iridiumit.petshop.repository.filtros.AnimalFiltro;
 
 @Controller
 @RequestMapping("/clientes/animais")
@@ -42,11 +42,17 @@ public class AnimalController {
 	private Racas racas;
 
 	@GetMapping
-	public ModelAndView listar(@ModelAttribute("filtro") AnimalFiltro filtro) {
-
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
+	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro) {
 
 		ModelAndView modelAndView = new ModelAndView("animais/lista-animais");
+		
+		String nome = "";
+		
+		if(filtro.getTextoFiltro() == null) {
+			nome = "%";
+		}else {
+			nome = filtro.getTextoFiltro();
+		}
 
 		modelAndView.addObject("animais", animais.findByNomeContainingIgnoreCase(nome));
 		return modelAndView;
