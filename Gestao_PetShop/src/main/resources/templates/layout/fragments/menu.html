@@ -103,6 +103,11 @@
 							<i class="fa fa-cart-arrow-down"></i>
 							<span class="d-none d-md-inline">Serviço</span>
     					</a>
+    					<a href="/raca_especie/novo" class="list-group-item" sec:authorize="hasRole('PS_ATENDIMENTO') or hasRole('PS_ADMIN')">
+							<i class="fas fa-dog"></i>
+							<span class="d-none d-md-inline">Raça</span>
+    					</a>
+    				
     					
 					</div>
 					
@@ -135,6 +140,11 @@
 							<i class="fas fa-industry"></i>
 							<span class="d-none d-md-inline">Fornecedores</span>
     					</a>
+    					<a href="/raca_especie" class="list-group-item" sec:authorize="hasRole('PS_ADMIN')">
+							<i class="fas fa-paste"></i>
+							<span class="d-none d-md-inline">Raças</span>
+    					</a>
+    					
 					</div>
 					
 

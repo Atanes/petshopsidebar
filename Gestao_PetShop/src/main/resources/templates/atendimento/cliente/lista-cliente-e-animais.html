@@ -103,9 +103,9 @@
 									<span th:text="${animal.nome}"></span>
 								</td>
 							<td	th:text="${animal.getIdade()}">idade</td>
-							<td th:text="${animal.raca}">raca</td>
+							<td th:text="${animal.raca.nome}">raca</td>
 
-							<td th:text="${animal.especie}">especie</td>
+							<td th:text="${animal.raca.especie}">especie</td>
 							
 							<td th:text="${animal.getPedigree()}">pedigree</td>
 

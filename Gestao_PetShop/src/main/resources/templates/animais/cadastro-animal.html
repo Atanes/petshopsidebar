@@ -40,8 +40,10 @@
 
 			<th:block th:insert="layout/fragments/MensagemErro :: erro"></th:block>
 
-			<input type="hidden" th:field="*{id}" /> <input type="hidden"
-				th:field="*{cliente}" /> <input type="hidden" id="resp_cadastro"
+			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{cliente}" />
+			
+			<input type="hidden" id="resp_cadastro"
 				name="resp_cadastro" th:value="${#authentication.principal.nome}" />
 
 			<div class="form-row">
@@ -83,32 +85,40 @@
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label class="campo_obrigatorio" for="especie">Espécie</label> <select
-							id="especie" class="form-control" th:field="*{especie}"
+						<label class="campo_obrigatorio" for="especie">Espécie</label>
+						<select	id="comboespecie" class="form-control" th:field="*{raca.especie}"
 							onchange="filtraRaca()">
 							<option value="">Selecione a espécie</option>
-							<option value="Anfíbios">Anfíbio</option>
-							<option value="Aves">Ave</option>
+							<option value="Anfíbio">Anfíbio</option>
+							<option value="Ave">Ave</option>
 							<option value="Canino">Canino</option>
 							<option value="Equino">Equino</option>
 							<option value="Felino">Felino</option>
-							<option value="Mamíferos">Mamífero</option>
+							<option value="Mamífero">Mamífero</option>
 							<option value="Peixe">Peixe</option>
-							<option value="Repteis">Réptel</option>
+							<option value="Réptel">Réptel</option>
 						</select>
 					</div>
 				</div>
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label class="campo_obrigatorio" for="raca">Raça</label> <select
-							id="raca" class="form-control" th:field="*{raca}">
-							<option th:each="raca: ${racas}" th:value="${raca.nome}"
-								th:text="${raca.nome}">Opção 1</option>
-						</select>
+						<label class="campo_obrigatorio" for="comboraca">Raça</label> 
+						<div class="bw-field-action">
+							<select	id="comboraca" class="form-control" th:field="*{raca.id}">
+								<option th:value="${animal.raca.id}" th:text="${animal.raca.nome}">Selecione a espécie</option>
+								<option th:each="raca: ${racas}" th:value="${raca.id}"
+									th:text="${raca.nome}">Opção 1</option>
+							</select>
+							<div id="botaoModal" class="bw-field-action__icon" style="display: none;">
+								<a href="#" data-toggle="modal" data-target="#modalCadastroRapidoRacaEspecie" title="Incluir nova Raça/Especie">
+									<i class="fas fa-plus-circle bw-glyphicon-large"></i>
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
-
+				
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="observacoes">Observações</label> <input
@@ -158,6 +168,9 @@
 			</div>
 
 		</form>
+		
+		<div th:replace="raca/cadastro-raca-especie-modal :: modalRacaEspecie"></div>
+		
 	</section>
 </body>
 </html>

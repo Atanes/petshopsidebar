@@ -1,8 +1,8 @@
 function filtraRaca() {
-    var especie = $("#especie").val();
+	var especie = $("#comboespecie").val();
     
-    let dropdown = $('#raca');    
-
+    let dropdown = $('#comboraca');   
+    
     dropdown.empty();
 
     $.ajax({
@@ -26,6 +26,12 @@ function filtraRaca() {
             for (var i = 0; i < listaDados.length; i++) {
                 console.log(listaDados[i]);
                 dropdown.append($('<option></option>').attr('value', listaDados[i].id).text(listaDados[i].nome));
+            }
+            
+            if(especie != ""){
+            	document.getElementById("botaoModal").style.display = "block";
+            } else {
+            	document.getElementById("botaoModal").style.display = "none";
             }
 
         },

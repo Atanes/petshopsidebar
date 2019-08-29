@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+
+</head>
+
+<body>
+
+	<section class="aw-layout-content js-content layout-pagina"
+		layout:fragment="content">
+
+		<h1 class="titulo-formulario">
+			<i class="fas fa-list"></i>Raças e Espécies
+		</h1>
+
+		<th:block th:insert="layout/fragments/MensagemGeral :: sucesso"></th:block>
+
+		<div class="pesquisa">
+			<form method="GET" class="form-inline" action="/raca_especie"
+				th:object="${filtro}">
+				<div class="input-group col-sm-4">
+					<input class="form-control"
+						placeholder="Qual raça você está procurando?"
+						autofocus="autofocus" th:field="*{textoFiltro}"></input>
+					<div class="input-group-append">
+						<button type="submit" class="btn btn-default">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="form-row">
+			<div class="table-responsive-sm col-sm-12">
+				<table id="tabela-racas_especies"
+					class="table table-sm table-striped table-bordered table-hover table-condensed js-sticky-table">
+					<thead>
+						<tr>
+							<th scope="col" class="text-center">Código</th>
+							<th scope="col">Espécie</th>
+							<th scope="col">Raça</th>
+							<th scope="col" class="text-center">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="raca_especie: ${racas}">
+							<td class="text-center" th:text="${raca_especie.id}">a1</td>
+
+							<td th:text="${raca_especie.nome}">data_nasc</td>
+
+							<td th:text="${raca_especie.especie}">especie</td>
+
+							<td class="text-center">
+								<form method="POST"
+									th:onsubmit="'return confirm(\'Posso remover a raça: ' + 
+								${raca_especie.nome} + ' da base de dados?\');'"
+									th:action="@{/raca_especie/excluir/{id}(id=${raca_especie.id})}">
+									<a class="btn btn-primary btn-sm"
+										th:href="@{/raca_especie/{id}(id=${raca_especie.id})}"
+										th:title="Editar"> <span class="fa fa-pencil-alt acoes"></span>
+									</a>
+									<button type="submit" class="btn btn-danger btn-sm"
+										title="Excluir">
+										<span class="far fa-trash-alt acoes"></span>
+									</button>
+								</form>
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="4" th:if="${racas.empty}">Nenhuma Raça e Espécie
+								cadastrados na base de dados!</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

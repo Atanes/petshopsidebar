@@ -48,34 +48,30 @@ public class ClienteController {
 	@GetMapping
 	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro) {
 
-ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes");
-		
-		String nome = "";
-		
-		if(filtro.getTextoFiltro() == null) {
-			nome = "%";
-		}else {
-			nome = filtro.getTextoFiltro();
+		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes");
+
+		if (filtro.getTextoFiltro() == null) {
+			modelAndView.addObject("clientes", clientes.findByAtivo(true));
+		} else {
+			modelAndView.addObject("clientes",
+					clientes.findByNomeContainingIgnoreCaseAndAtivo(filtro.getTextoFiltro(), true));
 		}
 
-		modelAndView.addObject("clientes", clientes.findByNomeContainingIgnoreCaseAndAtivo(nome, true));
 		return modelAndView;
 	}
 
 	@GetMapping("/inativos")
 	public ModelAndView listarInativos(@ModelAttribute("filtro") FiltroGeral filtro) {
 
-ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes-inativos");
-		
-		String nome = "";
-		
-		if(filtro.getTextoFiltro() == null) {
-			nome = "%";
-		}else {
-			nome = filtro.getTextoFiltro();
+		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes-inativos");
+
+		if (filtro.getTextoFiltro() == null) {
+			modelAndView.addObject("clientes", clientes.findByAtivo(false));
+		} else {
+			modelAndView.addObject("clientes",
+					clientes.findByNomeContainingIgnoreCaseAndAtivo(filtro.getTextoFiltro(), false));
 		}
 
-		modelAndView.addObject("clientes", clientes.findByNomeContainingIgnoreCaseAndAtivo(nome, false));
 		return modelAndView;
 	}
 
@@ -94,25 +90,21 @@ ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes
 
 		return modelAndView;
 	}
-	
-	
-	  @GetMapping("/selecao/{id}") public ModelAndView
-	  SelecaoPorCliente(@PathVariable Long id, @ModelAttribute("filtro")
-	  FiltroGeral filtro) {
-	  
-	  Cliente c = clientes.getOne(id);
-	  
-	  ModelAndView modelAndView = new
-	  ModelAndView("atendimento/cliente/lista-cliente-e-animais");
-	  
-	  modelAndView.addObject(c);
-	  
-	  modelAndView.addObject("animais", animais.findByCliente(c));
-	  
-	  return modelAndView;
-	  
-	  }
-	 
+
+	@GetMapping("/selecao/{id}")
+	public ModelAndView SelecaoPorCliente(@PathVariable Long id, @ModelAttribute("filtro") FiltroGeral filtro) {
+
+		Cliente c = clientes.getOne(id);
+
+		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-cliente-e-animais");
+
+		modelAndView.addObject(c);
+
+		modelAndView.addObject("animais", animais.findByCliente(c));
+
+		return modelAndView;
+
+	}
 
 	@DeleteMapping("excluir/{id}")
 	public String excluir(@PathVariable Long id, RedirectAttributes attributes) {
@@ -192,22 +184,20 @@ ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes
 
 	}
 
-	
-	  @GetMapping(value = "/rel-clientes", produces =
-	  MediaType.APPLICATION_PDF_VALUE) public @ResponseBody byte[] getRelClientes()
-	  throws IOException {
-	  
-	  ClienteREL relatorio = new ClienteREL();
-	  
-	  try {
-		  relatorio.imprimir(clientes.findAll());
-	  } catch (Exception e) {
-		  e.printStackTrace(); 
-	  }
-	  
-	  InputStream in = this.getClass().getResourceAsStream("/relatorios/Relatorio_de_Clientes.pdf");
-	  return IOUtils.toByteArray(in); 
-	  
-	  }
+	@GetMapping(value = "/rel-clientes", produces = MediaType.APPLICATION_PDF_VALUE)
+	public @ResponseBody byte[] getRelClientes() throws IOException {
+
+		ClienteREL relatorio = new ClienteREL();
+
+		try {
+			relatorio.imprimir(clientes.findAll());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		InputStream in = this.getClass().getResourceAsStream("/relatorios/Relatorio_de_Clientes.pdf");
+		return IOUtils.toByteArray(in);
+
+	}
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -34,11 +35,9 @@ public class Animal {
 	@NotBlank (message = "{sexo.not.blank}")
 	private String sexo;
 	
-	@NotBlank (message = "{raca.not.blank}")
-	private String raca;
-	
-	@NotBlank (message = "{especie.not.blank}")
-	private String especie;
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "raca_id", nullable = false)
+    private Raca raca;
 	
 	private boolean castrado;
 	
@@ -70,14 +69,13 @@ public class Animal {
 
 	}
 
-	public Animal(Long id, String nome, String sexo, String raca, String especie, boolean castrado, boolean pedigree,
+	public Animal(Long id, String nome, String sexo, Raca raca, String especie, boolean castrado, boolean pedigree,
 			Date data_nasc, String microship, String observacoes, Date data_cadastro, String resp_cadastro,
 			Cliente cliente) {
 		this.id = id;
 		this.nome = nome;
 		this.sexo = sexo;
 		this.raca = raca;
-		this.especie = especie;
 		this.castrado = castrado;
 		this.pedigree = pedigree;
 		this.data_nasc = data_nasc;
@@ -104,20 +102,12 @@ public class Animal {
 		this.nome = nome;
 	}
 
-	public String getRaca() {
+	public Raca getRaca() {
 		return raca;
 	}
 
-	public void setRaca(String raca) {
+	public void setRaca(Raca raca) {
 		this.raca = raca;
-	}
-
-	public String getEspecie() {
-		return especie;
-	}
-
-	public void setEspecie(String especie) {
-		this.especie = especie;
 	}
 
 	public String getSexo() {

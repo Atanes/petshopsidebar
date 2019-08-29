@@ -5,27 +5,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Raca {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank (message = "{name.not.blank}")
+
+	@NotEmpty(message = "Nome da raça é obrigatório.")
 	private String nome;
-	
-	@NotBlank (message = "{especie.not.blank}")
+
+	@NotEmpty(message = "Espécie é obrigatório.")
 	private String especie;
-	
+
 	public Raca() {
-		
 	}
 
-	public Raca(Long id, String nome) {
+	public Raca(Long id, String nome, String especie) {
 		this.id = id;
 		this.nome = nome;
+		this.especie = especie;
 	}
 
 	public Long getId() {
@@ -41,9 +42,9 @@ public class Raca {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
-	
+
 	public String getEspecie() {
 		return especie;
 	}

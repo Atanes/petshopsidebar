@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div class="modal fade" id="modalCadastroRapidoRacaEspecie"
+		tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+		aria-hidden="true" th:fragment="modalRacaEspecie">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ModalLabel">Cadastro de Raças</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Fechar">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-danger d-none js-mensagem-cadastro-rapido-raca_especie" role="alert">
+						<span th:text="${mensagem}"></span>
+					</div>
+					
+					<form>
+						<div class="form-group form-row">
+							<label for="nomeRaca" class="form-label col-sm-2 js-label-alert">Raça:</label>
+							<input type="text" class="form-control col-sm-6 js-input-alert" id="nomeRaca"/>
+						</div>
+						<div class="form-group form-row">
+							<label for="especie" class="form-label col-sm-2">Espécie:</label>
+							<input class="form-control col-sm-6" id="especie" readonly/>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-primary js-modal-cadastro-raca_especie-salvar-btn">Salvar</button>
+				</div>
+			</div>
+		</div>
+		<script th:src="@{/js/cadastroRapidoRacaEspecie.js}"></script>
+	</div>
+</body>
+</html>

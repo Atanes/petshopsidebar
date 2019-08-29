@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.iridiumit.petshop.repository.filtros.FiltroGeral;
 import com.iridiumit.petshop.model.Animal;
 import com.iridiumit.petshop.model.Cliente;
 import com.iridiumit.petshop.model.Raca;
 import com.iridiumit.petshop.repository.Animais;
 import com.iridiumit.petshop.repository.Clientes;
 import com.iridiumit.petshop.repository.Racas;
+import com.iridiumit.petshop.repository.filtros.FiltroGeral;
 
 @Controller
 @RequestMapping("/clientes/animais")
@@ -61,7 +61,7 @@ public class AnimalController {
 	@PostMapping("/excluir/{id}")
 	public String remover(@PathVariable Long id, RedirectAttributes attributes) {
 
-		Cliente c = animais.getOne(id).getCliente();
+		Cliente c = animais.findOne(id).getCliente();
 
 		animais.delete(id);
 
@@ -73,7 +73,7 @@ public class AnimalController {
 	@GetMapping("/{id}")
 	public ModelAndView editar(@PathVariable Long id) {
 
-		return novo(animais.getOne(id));
+		return novo(animais.findOne(id));
 	}
 
 	@GetMapping("/novo")
@@ -87,9 +87,10 @@ public class AnimalController {
 
 	@GetMapping("/incluirAnimal/{id}")
 	public ModelAndView incluirAnimal(@PathVariable Long id) {
+		
 		ModelAndView modelAndView = new ModelAndView("animais/cadastro-animal");
 
-		Cliente c = clientes.getOne(id);
+		Cliente c = clientes.findOne(id);
 
 		Animal a = new Animal();
 
@@ -102,10 +103,11 @@ public class AnimalController {
 
 	@PostMapping("/salvar")
 	public ModelAndView salvar(@Valid Animal animal, BindingResult result, RedirectAttributes attributes) {
+		
 		if (result.hasErrors()) {
 			return novo(animal);
 		}
-
+		
 		animal.setData_cadastro(new Date());
 
 		animais.save(animal);
