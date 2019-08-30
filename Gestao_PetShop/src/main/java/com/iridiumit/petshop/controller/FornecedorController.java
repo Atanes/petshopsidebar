@@ -56,6 +56,10 @@ public class FornecedorController {
 		
 		modelAndView.addObject(f);
 		
+		FiltroGeral fg = new FiltroGeral();
+		
+		modelAndView.addObject("filtro", fg);
+		
 		modelAndView.addObject("produtos", produtos.findByFornecedor(f));
 		
 		modelAndView.addObject("mensagem", "Fornecedor salvo com sucesso!");
