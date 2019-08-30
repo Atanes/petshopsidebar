@@ -9,20 +9,12 @@
 	<script th:src="@{/js/jquery.mask.min.js}"></script>
 	<script th:src="@{/js/mascaras.js}"></script>
 	<script th:src="@{/js/jquery.maskMoney.min.js}"></script>
+	<script th:src="@{/js/iridiumit.js}"></script>
 </head>
 
 <body>
 	<section layout:fragment="content">
 	
-	<script type="text/javascript">
-	$(function() {
-		var decimal = $('.js-decimal');
-		decimal.maskMoney({ decimal: ',', thousands: '.' });
-		
-		var plain = $('.js-plain');
-		plain.maskMoney({ precision: 0, thousands: '.' });
-	});
-	</script>
 		<div class="layout-pagina">
 
 			<h1 class="titulo-formulario"><i class="fas fa-paw"></i>Cadastro de produtos para o fornecedor: 
@@ -65,7 +57,7 @@
 					<div class="col-sm-1">
 						<div class="form-group">
 							<label class="campo_obrigatorio" for="qtd">Qtd</label>
-							<input id="qtd" type="text"	class="form-control sonumeros" th:field="*{qtd}" />
+							<input id="qtd" type="text"	class="form-control js-plain" th:field="*{qtd}" />
 						</div>
 					</div>
 					

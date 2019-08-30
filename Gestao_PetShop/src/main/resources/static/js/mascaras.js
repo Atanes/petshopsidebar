@@ -2,21 +2,17 @@
  * Base para as mascaras de entrada de dados do sistema usando jquery.mask
  */
 
-var maskBehavior = function(val) {
-	return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000'
-			: '(00) 0000-00009';
-}, options = {
-	onKeyPress : function(val, e, field, options) {
-		field.mask(maskBehavior.apply({}, arguments), options);
-	}
-};
-
 $(function() {
+	
+	$(".fone").inputmask({
+		mask : [ "(99) 9999-9999", "(99) 99999-9999", ],
+		keepStatic : true
+	});
+	
 	$('.date').mask('00/00/0000');
 	$('.time').mask('00:00:00');
 	$('.date_time').mask('00/00/0000 00:00:00');
 	$('.cep').mask('00000-000');
-	$('.phone').mask(maskBehavior, options);
 	$('.phone_us').mask('(000) 000-0000');
 	$('.integer').mask("#.##0", {
 		reverse : true

@@ -7,18 +7,10 @@
 	<title>Cadastro de Fornecedores</title>
 	<script th:src="@{/js/BuscaCEP.js}"></script>
 	<script th:src="@{/js/jquery.mask.min.js}"></script>
-	<script th:src="@{/js/mascaras.js}"></script>
+	
 	<script th:src="@{/webjars/jquery.inputmask/4.0.5/jquery.inputmask.bundle.js}"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
 	
-			$(".fone").inputmask({
-				mask : [ "(99) 9999-9999", "(99) 99999-9999", ],
-				keepStatic : true
-			});
-	
-		});
-	</script>
+	<script th:src="@{/js/mascaras.js}"></script>
 </head>
 
 <body>
