@@ -13,7 +13,6 @@ import com.iridiumit.petshop.model.Permissao;
 import com.iridiumit.petshop.model.Usuario;
 import com.iridiumit.petshop.repository.Permissoes;
 import com.iridiumit.petshop.repository.Usuarios;
-import com.iridiumit.petshop.repository.filtros.UsuarioFiltro;
 
 @Service
 public class UsuarioService implements UserDetailsService{
@@ -28,12 +27,12 @@ public class UsuarioService implements UserDetailsService{
 		return usuarios.findAll();
 	}
 	
-	public List<Usuario> filtrar(UsuarioFiltro filtro) {
+	public List<Usuario> filtrar(String nome) {
 		
-		if(filtro.getNome() == null) {
+		if(nome == null) {
 			return usuarios.findAll();
 		}else {
-			return usuarios.findByNomeContainingIgnoreCase(filtro.getNome());
+			return usuarios.findByNomeContainingIgnoreCase(nome);
 		}
 
 	}

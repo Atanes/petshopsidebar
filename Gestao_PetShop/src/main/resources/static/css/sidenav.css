@@ -28,6 +28,10 @@
     padding-right: 5px;
 }
 
+#sidebar a i {
+    padding-right: 5px;
+}
+
 #sidebar .list-group-item {
     border-radius: 0;
     background-color: #484848;

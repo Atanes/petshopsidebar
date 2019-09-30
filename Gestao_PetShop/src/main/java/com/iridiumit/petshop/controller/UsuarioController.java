@@ -2,7 +2,6 @@ package com.iridiumit.petshop.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -43,9 +42,12 @@ public class UsuarioController {
 		
 		ModelAndView modelAndView = new ModelAndView("administracao/usuario/lista-usuarios");
 		
-		List<Usuario> usuarios = usuarioService.filtrar(filtro);
-
-		modelAndView.addObject("usuarios", usuarios);
+		if(filtro.getNome() == null) {
+			modelAndView.addObject("usuarios", usuarioService.listarTodos());
+		}else {
+			modelAndView.addObject("usuarios", usuarioService.filtrar(filtro.getNome()));
+		}
+		
 		return modelAndView;
 	}
 	
@@ -55,6 +57,34 @@ public class UsuarioController {
 		usuarioService.excluir(id);
 
 		attributes.addFlashAttribute("mensagem", "Usuário inativado com sucesso!!");
+		
+		return "redirect:/administracao/usuarios";
+	}
+	
+	@GetMapping("/inativar/{id}")
+	public String inativar(@PathVariable Long id, RedirectAttributes attributes) {
+		
+		Usuario u = usuarioService.localizar(id);
+		
+		u.setAtivo(false);
+		
+		usuarioService.salvar(u);
+
+		attributes.addFlashAttribute("mensagem", "Usuário inativado com sucesso!!");
+		
+		return "redirect:/administracao/usuarios";
+	}
+	
+	@GetMapping("/ativar/{id}")
+	public String ativar(@PathVariable Long id, RedirectAttributes attributes) {
+		
+		Usuario u = usuarioService.localizar(id);
+		
+		u.setAtivo(true);
+		
+		usuarioService.salvar(u);
+
+		attributes.addFlashAttribute("mensagem", "Usuário re-ativado com sucesso!!");
 		
 		return "redirect:/administracao/usuarios";
 	}
@@ -114,7 +144,7 @@ public class UsuarioController {
 	@PostMapping("/atualizar")
 	public ModelAndView atualizar(@Valid Usuario usuario, BindingResult result, RedirectAttributes attributes) {
 		
-		Endereco e = enderecos.getOne(usuario.getEndereco().getId());
+		Endereco e = enderecos.findOne(usuario.getEndereco().getId());
 		
 		enderecos.save(e);
 
