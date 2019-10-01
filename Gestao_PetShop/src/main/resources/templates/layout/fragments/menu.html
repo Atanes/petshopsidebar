@@ -120,6 +120,10 @@
 						sec:authorize="hasRole('PS_ADMIN')"> <i
 						class="fas fa-user-slash"></i> <span class="d-none d-md-inline">Clientes
 							Inativos</span>
+					</a> <a href="/clientes/animais" class="list-group-item"
+						sec:authorize="hasRole('PS_ADMIN')">
+						<i class="fa fa-paw"></i> <span
+						class="d-none d-md-inline">Animais - Todos</span>
 					</a> <a href="/atendimento/consultas" class="list-group-item"
 						sec:authorize="hasRole('PS_ADMIN')or hasRole('PS_VETERINARIO')">
 						<i class="fas fa-notes-medical"></i> <span

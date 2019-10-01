@@ -25,7 +25,7 @@
 		<th:block th:insert="layout/fragments/MensagemGeral :: sucesso"></th:block>
 
 		<form method="POST" class="form-vertical  js-form-loading"
-			th:object="${animal}" th:action="@{/clientes/animais/salvar}">
+			th:object="${animal}" th:action="@{/clientes/animais/salvar}" enctype="multipart/form-data">
 
 			<th:block th:insert="layout/fragments/MensagemErro :: erro"></th:block>
 
@@ -36,8 +36,26 @@
 				name="resp_cadastro" th:value="${#authentication.principal.nome}" />
 
 			<div class="form-row">
-
-				<div class="col-sm-6">
+				<div class="col-sm-2">
+					<div class="form-group">
+						
+						<a data-toggle="modal" class="btn btn-primary btn-foto" href="#"
+										th:title="'Editar foto'" data-target="#modalCadastroFotoAnimal">
+							<i class="fas fa-camera"></i>
+						</a>
+						<label for="fotoAnimal">Foto</label>
+						<!-- IF Animal has Foto -->
+						<div th:if="${animal.foto}">
+						   <img id="fotoAnimal" class="image_upload_preview" th:src="@{/clientes/animais/fotos/{nome}(nome=${animal.foto})}" title="Foto do animal" />
+						</div>
+						<!-- ELSE -->
+						<div th:unless="${animal.foto}">
+						   <img id="fotoAnimal" class="image_upload_preview" th:src="@{/images/PetSemFoto.png}" title="Foto do animal" />
+						</div>
+						
+					</div>
+				</div>
+				<div class="col-sm-4">
 					<div class="form-group">
 						<label class="campo_obrigatorio" for="nome">Nome</label> <input
 							id="nome" type="text" class="form-control" th:field="*{nome}" />
@@ -74,9 +92,9 @@
 
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label class="campo_obrigatorio" for="especie">Espécie</label>
+						<label class="campo_obrigatorio" for="comboespecie">Espécie</label>
 						<select	id="comboespecie" class="form-control" th:field="*{raca.especie}"
-							onchange="filtraRaca()">
+							onchange="filtraRaca()" required>
 							<option value="">Selecione a espécie</option>
 							<option value="Anfíbio">Anfíbio</option>
 							<option value="Ave">Ave</option>
@@ -94,7 +112,8 @@
 					<div class="form-group">
 						<label class="campo_obrigatorio" for="comboraca">Raça</label> 
 						<div class="bw-field-action">
-							<select	id="comboraca" class="form-control" th:field="*{raca.id}">
+							<select	id="comboraca" class="form-control" th:field="*{raca.id}" required oninvalid="this.setCustomValidity('Campo obrigatório')" 
+									onchange="try{setCustomValidity('')}catch(e){}">
 								<option th:value="${animal.raca.id}" th:text="${animal.raca.nome}">Selecione a espécie</option>
 								<option th:each="raca: ${racas}" th:value="${raca.id}"
 									th:text="${raca.nome}">Opção 1</option>
@@ -107,7 +126,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="observacoes">Observações</label> <input
@@ -117,6 +136,7 @@
 				</div>
 			</div>
 			<div class="form-row">
+				
 				<div class="col-sm-2">
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" id="castrado"
@@ -135,14 +155,17 @@
 
 				<div id="divpedigree" class="col-sm-2">
 					<div class="form-group">
-						<label for="nrpedigree">Nº Pedigree</label> <input id="nrpedigree"
-							type="text" class="form-control" />
+						<label for="nrpedigree">Nº Pedigree</label>
+						<input id="nrpedigree" type="text" class="form-control" th:field="*{nrpedigree}"/>
 					</div>
 				</div>
 
 			</div>
-
-			<div class="container">
+				
+			<input id="fotoType" type="hidden" class="form-control" th:field="*{fotoType}" />
+			<input id="foto" type="hidden" class="form-control" th:field="*{foto}" />
+				
+			<div class="container grupo_salvar_cancelar">
 				<div class="form-row justify-content-between">
 					<button class="btn btn-primary btn-sm col-sm-2" type="submit"
 						title="Salvar">
@@ -155,11 +178,13 @@
 					</a>
 				</div>
 			</div>
+			
+			<div th:replace="animais/cadastro-foto-animal-modal :: modalFotoAnimal"></div>
 
 		</form>
+				
 		
 		<div th:replace="raca/cadastro-raca-especie-modal :: modalRacaEspecie"></div>
-		
 	</section>
 </body>
 </html>

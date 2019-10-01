@@ -6,15 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.iridiumit.petshop.model.Animal;
 import com.iridiumit.petshop.model.Cliente;
+import com.iridiumit.petshop.model.Raca;
 
 public interface Animais extends JpaRepository<Animal, Long>{
 	
-	List<Animal> findByNome(String nome);
+List<Animal> findByNome(String nome);
 	
 	List<Animal> findByCliente (Cliente c);
 
-	List<Animal> findByNomeContainingIgnoreCase(String nome);
+	List<Animal> findByNomeContainingIgnoreCaseOrderByNome(String nome);
 	
-	List<Animal> findByRaca(String raca);
+	List<Animal> findByRaca(Raca raca);
 
 }

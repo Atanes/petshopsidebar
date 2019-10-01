@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -35,13 +34,15 @@ public class Animal {
 	@NotBlank (message = "{sexo.not.blank}")
 	private String sexo;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "raca_id", nullable = false)
     private Raca raca;
 	
 	private boolean castrado;
 	
 	private boolean pedigree;
+	
+	private String nrpedigree;
 	
 	@Column(name="data_nasc")
 	@Temporal(TemporalType.DATE)
@@ -64,26 +65,33 @@ public class Animal {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
+	
+	private String foto;
+	
+	private String fotoType;
 
 	public Animal() {
 
 	}
 
 	public Animal(Long id, String nome, String sexo, Raca raca, String especie, boolean castrado, boolean pedigree,
-			Date data_nasc, String microship, String observacoes, Date data_cadastro, String resp_cadastro,
-			Cliente cliente) {
+			String nrpedigree, Date data_nasc, String microship, String observacoes, Date data_cadastro, String resp_cadastro,
+			Cliente cliente, String foto, String ftype) {
 		this.id = id;
 		this.nome = nome;
 		this.sexo = sexo;
 		this.raca = raca;
 		this.castrado = castrado;
 		this.pedigree = pedigree;
+		this.nrpedigree = nrpedigree;
 		this.data_nasc = data_nasc;
 		this.microship = microship;
 		this.observacoes = observacoes;
 		this.data_cadastro = data_cadastro;
 		this.resp_cadastro = resp_cadastro;
 		this.cliente = cliente;
+		this.foto = foto;
+		this.fotoType = ftype;
 	}
 
 	public Long getId() {
@@ -139,6 +147,14 @@ public class Animal {
 			return "Sim";
 		}
 		return "Não";
+	}
+	
+	public String getNrpedigree() {
+		return nrpedigree;
+	}
+
+	public void setNrpedigree(String nrpedigree) {
+		this.nrpedigree = nrpedigree;
 	}
 
 	public Date getData_nasc() {
@@ -204,6 +220,22 @@ public class Animal {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getFotoType() {
+		return fotoType;
+	}
+
+	public void setFotoType(String fotoType) {
+		this.fotoType = fotoType;
 	}
 
 	@Override

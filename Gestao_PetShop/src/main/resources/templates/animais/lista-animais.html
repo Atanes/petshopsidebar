@@ -43,33 +43,38 @@
 					class="table  table-sm table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
 					<thead>
 						<tr>
-							<th scope="col" class="text-center">Código</th>
+							<th scope="col">Código</th>
+							<th scope="col">Foto</th>
 							<th scope="col">Nome</th>
-							<th scope="col">Data Nasc.</th>
 							<th scope="col">Raça</th>
 							<th scope="col">Espécie</th>
-							<th scope="col">Pedigree</th>
 							<th scope="col">Cliente</th>
-							<th scope="col" class="col-md-1 text-center">Ações</th>
+							<th scope="col">Ações</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="animal: ${animais}">
-							<td class="col-md-1 text-center" th:text="${animal.id}">a1</td>
+							<td class="text-center" th:text="${animal.id}">a1</td>
+							
+							<td class="text-center" th:if="${animal.foto}">
+								<img  id="fotoAnimal" class="foto_animal_listagem" 
+								th:src="@{/clientes/animais/fotos/{nome}(nome=${animal.foto})}"
+									title="Foto do animal" />
+							</td>
+							<td class="text-center" th:unless="${animal.foto}">
+								<img  id="fotoAnimal" class="foto_animal_listagem" 
+									th:src="@{/images/PetSemFoto.png}" title="Foto do animal" />
+							</td>
 
-							<td><a class="btn btn-info btn-xs"
+							<td><a class="btn btn-info btn-sm"
 								th:href="@{/atendimento/consultas/novo/{id}(id=${animal.id})}"
 								th:title="'Incluir Consultas'"> <span
 									class="fa fa-user-md acoes"></span>
 							</a> <span th:text="${animal.nome}"></span></td>
 
-							<td th:text="${animal.getDataFormatada(animal.data_nasc)}">data_nasc</td>
-
 							<td th:text="${animal.raca.nome}">raca</td>
 
 							<td th:text="${animal.raca.especie}">especie</td>
-
-							<td th:text="${animal.getPedigree()}">pedigree</td>
 
 							<td th:text="${animal.cliente.nome}">cliente</td>
 
@@ -95,7 +100,7 @@
 						</tr>
 
 						<tr>
-							<td colspan="8" th:if="${animais.empty}">Nenhum Animal
+							<td colspan="7" th:if="${animais.empty}">Nenhum Animal
 								cadastrado na base de dados!</td>
 						</tr>
 					</tbody>

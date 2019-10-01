@@ -1,10 +1,13 @@
 package com.iridiumit.petshop.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,10 +31,15 @@ import com.iridiumit.petshop.repository.Animais;
 import com.iridiumit.petshop.repository.Clientes;
 import com.iridiumit.petshop.repository.Racas;
 import com.iridiumit.petshop.repository.filtros.FiltroGeral;
+import com.iridiumit.petshop.service.FotoService;
 
 @Controller
 @RequestMapping("/clientes/animais")
 public class AnimalController {
+	
+	//private Logger logger = LoggerFactory.getLogger(AmazonClient.class);
+	
+	private Logger logger = LoggerFactory.getLogger(FotoService.class);
 
 	@Autowired
 	private Clientes clientes;
@@ -40,21 +49,26 @@ public class AnimalController {
 
 	@Autowired
 	private Racas racas;
+	
+	@Autowired
+	private FotoService fotoService;
+
+	/*
+	 * @Autowired private AmazonClient amazonClient;
+	 */
 
 	@GetMapping
 	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro) {
 
 		ModelAndView modelAndView = new ModelAndView("animais/lista-animais");
-		
-		String nome = "";
-		
-		if(filtro.getTextoFiltro() == null) {
-			nome = "%";
-		}else {
-			nome = filtro.getTextoFiltro();
-		}
 
-		modelAndView.addObject("animais", animais.findByNomeContainingIgnoreCase(nome));
+
+		if (filtro.getTextoFiltro() == null) {
+			modelAndView.addObject("animais", animais.findAll());
+		} else {
+			modelAndView.addObject("animais", animais.findByNomeContainingIgnoreCaseOrderByNome(filtro.getTextoFiltro()));
+		}
+		
 		return modelAndView;
 	}
 
@@ -62,8 +76,13 @@ public class AnimalController {
 	public String remover(@PathVariable Long id, RedirectAttributes attributes) {
 
 		Cliente c = animais.findOne(id).getCliente();
+		
+		Animal a = animais.getOne(id);
 
 		animais.delete(id);
+		
+		//System.out.println(amazonClient.deleteFileFromS3Bucket(a.getFoto()));
+		logger.info(fotoService.removerFoto(a.getFoto()));
 
 		attributes.addFlashAttribute("mensagem", "Animal excluido com sucesso!!");
 
@@ -87,12 +106,14 @@ public class AnimalController {
 
 	@GetMapping("/incluirAnimal/{id}")
 	public ModelAndView incluirAnimal(@PathVariable Long id) {
-		
+
 		ModelAndView modelAndView = new ModelAndView("animais/cadastro-animal");
 
 		Cliente c = clientes.findOne(id);
 
 		Animal a = new Animal();
+
+		System.out.println(a.getFoto());
 
 		a.setCliente(c);
 
@@ -102,12 +123,31 @@ public class AnimalController {
 	}
 
 	@PostMapping("/salvar")
-	public ModelAndView salvar(@Valid Animal animal, BindingResult result, RedirectAttributes attributes) {
-		
+	public ModelAndView salvar(@RequestParam("file") MultipartFile file, @Valid Animal animal, BindingResult result,
+			RedirectAttributes attributes) {
+
 		if (result.hasErrors()) {
 			return novo(animal);
 		}
-		
+
+		if (!file.isEmpty()) {
+			
+			if(!animal.getFoto().isEmpty()) {
+				//logger.info(amazonClient.deleteFileFromS3Bucket(animal.getFoto()));
+				logger.info(fotoService.removerFoto(animal.getFoto()));
+			}
+			
+			String arquivoFoto = fotoService.doUpload(file, animal);
+			// String arquivoFoto = amazonClient.uploadFile(file, animal);
+
+			if (arquivoFoto.equals("erro")) {
+				attributes.addFlashAttribute("mensagem", "Problemas para salvar a foto do animal!!");
+				return novo(animal);
+			} else {
+				animal.setFoto(arquivoFoto);
+			}
+		}
+
 		animal.setData_cadastro(new Date());
 
 		animais.save(animal);
@@ -126,6 +166,14 @@ public class AnimalController {
 		model.addAttribute("adicionados", r);
 		return r;
 
+	}
+	
+	@GetMapping("/fotos/{nome:.*}")
+	public @ResponseBody byte[] recuperarFoto(@PathVariable String nome) throws IOException {
+
+		logger.info("Foto retornada:" + nome);
+		
+		return fotoService.recuperarFoto(nome);
 	}
 
 }
