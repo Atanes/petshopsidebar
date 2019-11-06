@@ -3,10 +3,14 @@ package com.iridiumit.petshop.controller;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,10 +32,14 @@ import com.iridiumit.petshop.repository.Clientes;
 import com.iridiumit.petshop.repository.Enderecos;
 import com.iridiumit.petshop.repository.filtros.FiltroGeral;
 import com.iridiumit.petshop.service.ClienteService;
+import com.iridiumit.petshop.utils.PageUtils;
 
 @Controller
 @RequestMapping("/atendimento/clientes")
 public class ClienteController {
+	
+	private static final String ORDERBYCLIENTE = "nome";
+	private static final int RECORDSPERPAGE = 5;
 
 	@Autowired
 	private ClienteService clienteService;
@@ -46,16 +54,21 @@ public class ClienteController {
 	private Animais animais;
 
 	@GetMapping
-	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro) {
+	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro,
+			@PageableDefault(size = RECORDSPERPAGE, sort = ORDERBYCLIENTE, direction = Direction.ASC) Pageable pageable
+			, HttpServletRequest httpServletRequest) {
 
 		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes");
-
-		if (filtro.getTextoFiltro() == null) {
-			modelAndView.addObject("clientes", clientes.findByAtivo(true));
-		} else {
-			modelAndView.addObject("clientes",
-					clientes.findByNomeContainingIgnoreCaseAndAtivo(filtro.getTextoFiltro(), true));
+		
+		if(filtro.getTextoFiltro() == null) {
+			modelAndView.addObject("clientes", clientes.findByAtivo(true, pageable));
+		}else {
+			modelAndView.addObject("clientes", clientes.findByNomeContainingIgnoreCaseAndAtivo(filtro.getTextoFiltro(), true, pageable));
 		}
+		
+		PageUtils pageUtils = new PageUtils(httpServletRequest, pageable);
+
+		modelAndView.addObject("controlePagina", pageUtils);
 
 		return modelAndView;
 	}
@@ -64,14 +77,16 @@ public class ClienteController {
 	public ModelAndView listarInativos(@ModelAttribute("filtro") FiltroGeral filtro) {
 
 		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-clientes-inativos");
-
-		if (filtro.getTextoFiltro() == null) {
-			modelAndView.addObject("clientes", clientes.findByAtivo(false));
-		} else {
-			modelAndView.addObject("clientes",
-					clientes.findByNomeContainingIgnoreCaseAndAtivo(filtro.getTextoFiltro(), false));
+		
+		String nome = "";
+		
+		if(filtro.getTextoFiltro() == null) {
+			nome = "%";
+		}else {
+			nome = filtro.getTextoFiltro();
 		}
 
+		modelAndView.addObject("clientes", clientes.findByNomeContainingIgnoreCaseAndAtivo(nome, false));
 		return modelAndView;
 	}
 
@@ -80,7 +95,7 @@ public class ClienteController {
 
 		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-cliente-e-animais");
 
-		Cliente c = clientes.getOne(id);
+		Cliente c = clientes.findOne(id);
 
 		modelAndView.addObject(c);
 
@@ -90,26 +105,30 @@ public class ClienteController {
 
 		return modelAndView;
 	}
-
-	@GetMapping("/selecao/{id}")
-	public ModelAndView SelecaoPorCliente(@PathVariable Long id, @ModelAttribute("filtro") FiltroGeral filtro) {
-
-		Cliente c = clientes.getOne(id);
-
-		ModelAndView modelAndView = new ModelAndView("atendimento/cliente/lista-cliente-e-animais");
-
-		modelAndView.addObject(c);
-
-		modelAndView.addObject("animais", animais.findByCliente(c));
-
-		return modelAndView;
-
-	}
+	
+	
+	  @GetMapping("/selecao/{id}") public ModelAndView
+	  SelecaoPorCliente(@PathVariable Long id, @ModelAttribute("filtro")
+	  FiltroGeral filtro) {
+	  
+	  Cliente c = clientes.findOne(id);
+	  
+	  ModelAndView modelAndView = new
+	  ModelAndView("atendimento/cliente/lista-cliente-e-animais");
+	  
+	  modelAndView.addObject(c);
+	  
+	  modelAndView.addObject("animais", animais.findByCliente(c));
+	  
+	  return modelAndView;
+	  
+	  }
+	 
 
 	@DeleteMapping("excluir/{id}")
 	public String excluir(@PathVariable Long id, RedirectAttributes attributes) {
 
-		Cliente c = clientes.getOne(id);
+		Cliente c = clientes.findOne(id);
 
 		c.setAtivo(false); // Inativa o cliente na base de dados, mas mantem as informações de cadastro
 
@@ -184,20 +203,22 @@ public class ClienteController {
 
 	}
 
-	@GetMapping(value = "/rel-clientes", produces = MediaType.APPLICATION_PDF_VALUE)
-	public @ResponseBody byte[] getRelClientes() throws IOException {
-
-		ClienteREL relatorio = new ClienteREL();
-
-		try {
-			relatorio.imprimir(clientes.findAll());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		InputStream in = this.getClass().getResourceAsStream("/relatorios/Relatorio_de_Clientes.pdf");
-		return IOUtils.toByteArray(in);
-
-	}
+	
+	  @GetMapping(value = "/rel-clientes", produces =
+	  MediaType.APPLICATION_PDF_VALUE) public @ResponseBody byte[] getRelClientes()
+	  throws IOException {
+	  
+	  ClienteREL relatorio = new ClienteREL();
+	  
+	  try {
+		  relatorio.imprimir(clientes.findAll());
+	  } catch (Exception e) {
+		  e.printStackTrace(); 
+	  }
+	  
+	  InputStream in = this.getClass().getResourceAsStream("/relatorios/Relatorio_de_Clientes.pdf");
+	  return IOUtils.toByteArray(in); 
+	  
+	  }
 
 }

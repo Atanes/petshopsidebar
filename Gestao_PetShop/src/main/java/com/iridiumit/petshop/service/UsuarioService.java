@@ -3,6 +3,8 @@ package com.iridiumit.petshop.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,28 +25,28 @@ public class UsuarioService implements UserDetailsService{
 	@Autowired
 	private Permissoes permissoes;
 	
+	public Page<Usuario> listarTodos(Pageable pageable) {
+	
+		return usuarios.findAll(pageable);
+	}
+	
 	public List<Usuario> listarTodos() {
+		
 		return usuarios.findAll();
 	}
 	
-	public List<Usuario> filtrar(String nome) {
-		
-		if(nome == null) {
-			return usuarios.findAll();
-		}else {
-			return usuarios.findByNomeContainingIgnoreCase(nome);
-		}
-
+	public Page<Usuario> filtrar(String nome, Pageable pageable) {
+		return usuarios.findByNomeContainingIgnoreCase(nome, pageable);
 	}
 	
 	public void excluir(Long codigo) {
-		Usuario u = usuarios.getOne(codigo);
+		Usuario u = usuarios.findOne(codigo);
 		u.setAtivo(false);
 		usuarios.save(u);
 	}
 	
 	public Usuario localizar(Long id){
-		return usuarios.getOne(id);
+		return usuarios.findOne(id);
 	}
 	
 	public Usuario localizarCPF(String cpf){

@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,10 +36,14 @@ import com.iridiumit.petshop.repository.Clientes;
 import com.iridiumit.petshop.repository.Racas;
 import com.iridiumit.petshop.repository.filtros.FiltroGeral;
 import com.iridiumit.petshop.service.FotoService;
+import com.iridiumit.petshop.utils.PageUtils;
 
 @Controller
 @RequestMapping("/clientes/animais")
 public class AnimalController {
+	
+	private static final String ORDERBYANIMAL = "nome";
+	private static final int RECORDSPERPAGE = 5;
 	
 	//private Logger logger = LoggerFactory.getLogger(AmazonClient.class);
 	
@@ -58,16 +66,22 @@ public class AnimalController {
 	 */
 
 	@GetMapping
-	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro) {
+	public ModelAndView listar(@ModelAttribute("filtro") FiltroGeral filtro, 
+			@PageableDefault(size = RECORDSPERPAGE, sort = ORDERBYANIMAL, direction = Direction.ASC) Pageable pageable
+			, HttpServletRequest httpServletRequest) {
 
 		ModelAndView modelAndView = new ModelAndView("animais/lista-animais");
 
 
 		if (filtro.getTextoFiltro() == null) {
-			modelAndView.addObject("animais", animais.findAll());
+			modelAndView.addObject("animais", animais.findAll(pageable));
 		} else {
-			modelAndView.addObject("animais", animais.findByNomeContainingIgnoreCaseOrderByNome(filtro.getTextoFiltro()));
+			modelAndView.addObject("animais", animais.findByNomeContainingIgnoreCase(filtro.getTextoFiltro(), pageable));
 		}
+		
+		PageUtils pageUtils = new PageUtils(httpServletRequest, pageable);
+
+		modelAndView.addObject("controlePagina", pageUtils);
 		
 		return modelAndView;
 	}
