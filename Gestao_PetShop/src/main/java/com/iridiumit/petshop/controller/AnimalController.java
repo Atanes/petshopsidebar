@@ -170,24 +170,25 @@ public class AnimalController {
 
 		return new ModelAndView("redirect:/atendimento/clientes/selecao/" + animal.getCliente().getId());
 	}
-
-	// Método que recebe uma especie e devolve as raças relecionadas para o select
-	@RequestMapping(value = "/listaRacas", method = RequestMethod.GET)
-	public @ResponseBody List<Raca> adicionados(@RequestParam String especie, Model model) {
-
-		List<Raca> r = racas.findByEspecieIgnoreCaseOrderByNome(especie);
-
-		model.addAttribute("adicionados", r);
-		return r;
-
-	}
 	
-	@GetMapping("/fotos/{nome:.*}")
-	public @ResponseBody byte[] recuperarFoto(@PathVariable String nome) throws IOException {
+	// Método que recebe uma especie e devolve as raças relecionadas para o select
+		@RequestMapping(value = "/listaRacas", method = RequestMethod.GET)
+		public @ResponseBody List<Raca> adicionados(@RequestParam String especie, Model model) {
 
-		logger.info("Foto retornada:" + nome);
+			List<Raca> r = racas.findByEspecieIgnoreCaseOrderByNome(especie);
+
+			model.addAttribute("adicionados", r);
+			return r;
+
+		}
 		
-		return fotoService.recuperarFoto(nome);
-	}
+		@GetMapping("/fotos/{nome:.*}")
+		public @ResponseBody byte[] recuperarFoto(@PathVariable String nome) throws IOException {
+
+			logger.info("Foto retornada:" + nome);
+			
+			return fotoService.recuperarFoto(nome);
+		}
+	
 
 }
